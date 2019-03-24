@@ -1,7 +1,7 @@
 
 package Controlador;
 
-import Vista.Home;
+import Vista.Inicio;
 
 /**
  *
@@ -13,7 +13,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       Home h = new Home();
+       Inicio h = new Inicio();
        h.setVisible(true);
     }
     
