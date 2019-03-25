@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.stage.FileChooser;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -450,7 +453,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_top_barMouseDragged
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
-        Inicio.this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_closeMouseClicked
 
     private void MinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MinimizeMouseClicked
@@ -463,13 +466,17 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MouseDragged
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        JFileChooser fc = new JFileChooser();
-        fc.showOpenDialog(jPanel3);
-        try{
-            file = fc.getSelectedFile();
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+
+        JFXPanel p = new JFXPanel();
+        Platform.runLater(() -> {
+            FileChooser d = new FileChooser();
+            
+            try{
+            file = d.showOpenDialog(null);
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        });
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
@@ -477,11 +484,9 @@ public class Inicio extends javax.swing.JFrame {
         ArrayList<Word> palabras = new ArrayList<>();
         
         if (file==null) {
-            JOptionPane.showMessageDialog(this, "Error", "No ha seleccionado ningún archivo", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún archivo", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
             FileReader f1 = null;
-            String limite = ","; // Elemento que separa el código, enombre, la dirección, el sexo y la edad dentro del fichero
-            String[] dataword; // Dividimos la linea del fichero en unidades independientes
             boolean valido = true; //Bandera para carácteres válidos
             char character;
             int value;
@@ -490,37 +495,40 @@ public class Inicio extends javax.swing.JFrame {
                 f1 = new FileReader(file);
 
                 BufferedReader reader = new BufferedReader(f1);
-                String linea = reader.readLine(); // leemos la primera linea
-
-                do {
-                    dataword = linea.split(limite, 5);
-                    for (String dataword1 : dataword) {
-                        binary = "";
-                        for (int j = 0; j < dataword1.length(); j++) {
-                            character = dataword1.charAt(j);
-                            value = (int)character;
-                            //Si es un carácter válido
-                            if (value > 64 && value<91 || value > 96 && value < 123 || 
-                                    value == 58 && value == 59 || value ==44 || value == 46) {
-                                binary = binary.concat(decimalToBinary(value));
-                                palabras.add(new Word(binary));
-                            } else{
-                                palabras.clear();
-                                valido = false;
-                                JOptionPane.showMessageDialog(this, "Invalid file","File contains invalid characters", JOptionPane.ERROR_MESSAGE);
-                            }
+                String linea = reader.readLine(); // leemos la unica linea
+                if(linea==null){                 //Verificamos que no este vacia
+                    JOptionPane.showMessageDialog(this, "Por favor verifique que el archivo contiene texto","Error", JOptionPane.ERROR_MESSAGE);
+                    valido = false;
+                }else if (reader.readLine()!=null){ //Comprobamos que tenga solo una linea
+                    JOptionPane.showMessageDialog(this, "Por favor verifique que el archivo tiene solo una linea", "Error", JOptionPane.ERROR_MESSAGE);
+                    valido = false;
+                }else{
+                    binary = "";
+                    for (int j = 0; j < linea.length(); j++) {
+                        character = linea.charAt(j);
+                        value = (int)character;
+                        //Si es un carácter válido
+                        if (value > 64 && value<91 || value > 96 && value < 123 || 
+                            value == 58 && value == 59 || value ==44 || value == 46) {
+                            binary = binary.concat(decimalToBinary(value));
+                            palabras.add(new Word(binary));
+                        } else{
+                            palabras.clear();
+                            valido = false;
+                            JOptionPane.showMessageDialog(this, "El archivo contiene caracteres invalidos", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                    linea = reader.readLine(); //Se lee
-                } while (linea != null && valido);
+                }
                 reader.close();
                 if (valido) {
                     JOptionPane.showMessageDialog(this, "Proceso exitoso", "Archivo actualizado con éxito", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "El archivo se ha movido o eliminado","Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                
             } finally {
                 try {
                     if (f1 != null) {
