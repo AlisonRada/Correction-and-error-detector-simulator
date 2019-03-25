@@ -1,8 +1,19 @@
 
 package Vista;
 
+import Modelo.Word;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -16,9 +27,12 @@ public class Inicio extends javax.swing.JFrame {
      */
     
     int x, y;
+    File file;
     
     public Inicio() {
         initComponents();
+        setTitle("Simulator");
+        setIconImage(new ImageIcon(getClass().getResource("../Imagenes/network-24.png")).getImage());
         setColor(btn_1); 
         ind_1.setOpaque(true);
         resetColor(new JPanel[]{btn_2,btn_3}, new JPanel[]{ind_2, ind_3});
@@ -54,7 +68,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        button1 = new java.awt.Button();
+        validateFile = new java.awt.Button();
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -274,9 +288,6 @@ public class Inicio extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel3MouseEntered(evt);
-            }
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -309,12 +320,12 @@ public class Inicio extends javax.swing.JFrame {
                 .addGap(78, 78, 78))
         );
 
-        button1.setBackground(new java.awt.Color(11, 181, 217));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setLabel("Upload File");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        validateFile.setBackground(new java.awt.Color(11, 181, 217));
+        validateFile.setForeground(new java.awt.Color(255, 255, 255));
+        validateFile.setLabel("Upload File");
+        validateFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                validateFileActionPerformed(evt);
             }
         });
 
@@ -332,7 +343,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addGap(22, 22, 22))
@@ -344,7 +355,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -412,18 +423,21 @@ public class Inicio extends javax.swing.JFrame {
         setColor(btn_1); 
         ind_1.setOpaque(true);
         resetColor(new JPanel[]{btn_2,btn_3}, new JPanel[]{ind_2, ind_3});
+        upload_panel.setVisible(true);
     }//GEN-LAST:event_btn_1MousePressed
 
     private void btn_2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2MousePressed
         setColor(btn_2); 
         ind_2.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_3}, new JPanel[]{ind_1, ind_3});
+        upload_panel.setVisible(false);
     }//GEN-LAST:event_btn_2MousePressed
 
     private void btn_3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_3MousePressed
         setColor(btn_3); 
         ind_3.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_2}, new JPanel[]{ind_1, ind_2});
+        upload_panel.setVisible(false);
     }//GEN-LAST:event_btn_3MousePressed
 
     private void top_barMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_top_barMousePressed
@@ -444,23 +458,90 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_MinimizeMouseClicked
 
     private void jPanel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseDragged
-        // TODO add your handling code here:
+     
         jPanel3.setBackground(Color.lightGray);
     }//GEN-LAST:event_jPanel3MouseDragged
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(jPanel3);
+        try{
+            file = fc.getSelectedFile();
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_jPanel3MouseClicked
 
-    private void jPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel3MouseEntered
+    private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
+      
+        ArrayList<Word> palabras = new ArrayList<>();
+        
+        if (file==null) {
+            JOptionPane.showMessageDialog(this, "Error", "No ha seleccionado ningún archivo", JOptionPane.ERROR);
+        } else{
+            FileReader f1 = null;
+            String limite = ","; // Elemento que separa el código, enombre, la dirección, el sexo y la edad dentro del fichero
+            String[] dataword; // Dividimos la linea del fichero en unidades independientes
+            boolean valido = true; //Bandera para carácteres válidos
+            char character;
+            int value;
+            String binary;
+            try {
+                f1 = new FileReader(file);
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button1ActionPerformed
+                BufferedReader reader = new BufferedReader(f1);
+                String linea = reader.readLine(); // leemos la primera linea
 
+                do {
+                    dataword = linea.split(limite, 5);
+                    for (String dataword1 : dataword) {
+                        binary = "";
+                        for (int j = 0; j < dataword1.length(); j++) {
+                            character = dataword1.charAt(j);
+                            value = (int)character;
+                            //Si es un carácter válido
+                            if (value > 64 && value<91 || value > 96 && value < 123 || 
+                                    value == 58 && value == 59 || value ==44 || value == 46) {
+                                binary = binary.concat(decimalToBinary(value));
+                                palabras.add(new Word(binary));
+                            } else{
+                                palabras.clear();
+                                valido = false;
+                                JOptionPane.showMessageDialog(this, "Invalid file","File contains invalid characters", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    }
+                    linea = reader.readLine(); //Se lee
+                } while (linea != null && valido);
+                reader.close();
+                if (valido) {
+                    JOptionPane.showMessageDialog(this, "Proceso exitoso", "Archivo actualizado con éxito", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (f1 != null) {
+                        f1.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_validateFileActionPerformed
+
+    private static String decimalToBinary(int n){
+        if (n<=1) {
+            return ""+n;
+        } else{
+            //decimalToBinary(n/2);
+            return ""+decimalToBinary(n/2)+n%2;
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -516,7 +597,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel btn_1;
     private javax.swing.JPanel btn_2;
     private javax.swing.JPanel btn_3;
-    private java.awt.Button button1;
     private javax.swing.JPanel central_panel;
     private javax.swing.JLabel close;
     private javax.swing.JPanel ind_1;
@@ -537,5 +617,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel side_panel;
     private javax.swing.JPanel top_bar;
     private javax.swing.JPanel upload_panel;
+    private java.awt.Button validateFile;
     // End of variables declaration//GEN-END:variables
 }
