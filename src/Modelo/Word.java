@@ -16,7 +16,7 @@ public class Word {
     public Word(String dataword) {
         this.dataword = dataword;
         this.datawordLength = dataword.length();
-        this.codeword =  DeterminateCodeword(dataword);
+        this.codeword = DeterminateCodeword(dataword);
         this.codewordLength = codeword.length();
     }
 
