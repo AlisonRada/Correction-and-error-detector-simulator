@@ -11,23 +11,13 @@ public class Word {
     String codeword;
     int datawordLength;
     int codewordLength;
-    boolean correct;
     
 
-    public Word(String word, boolean code) {
-        if(!code){ //Verifica si le entra un codeword o un dataword
-            this.dataword = word;
-            this.datawordLength = word.length();
-            this.codeword = DeterminateCodeword(word);
-            this.codewordLength = codeword.length();
-            this.correct = true;
-        }else{
-            this.dataword = word.substring(0, codeword.length()-2);;
-            this.codeword = word;
-            this.datawordLength = this.dataword.length();
-            this.codewordLength = word.length();
-            this.correct = ParityBit(word);
-        }
+    public Word(String dataword) {
+        this.dataword = dataword;
+        this.datawordLength = dataword.length();
+        this.codeword = DeterminateCodeword(dataword);
+        this.codewordLength = codeword.length();
     }
 
     public String getDataword() {
@@ -53,7 +43,6 @@ public class Word {
             return dataword.concat("1");
         }
     }
-    
     
     /*  Me dice el bit de paridad correspondiente a un dataword
     - Si el número de 1s es par retorna falso, lo que indica que el bit de paridad es 0
