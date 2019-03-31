@@ -1,4 +1,3 @@
-
 package Controlador;
 
 import Vista.Inicio;
@@ -6,6 +5,7 @@ import Vista.Inicio;
 /**
  *
  * @author Alison
+ * @author Leonardo
  */
 public class Main {
 
@@ -13,13 +13,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       Inicio h = new Inicio();
-       h.setVisible(true);
+        Inicio i = new Inicio();
+        i.setVisible(true);
     }
-    
-    public static String bintoString (String bin){
-        String word = "";   
-        char letter= (char)Integer.parseInt(bin, 2);
+
+    public static String bintoString(String bin) {
+        String word = "";
+        char letter = (char) Integer.parseInt(bin, 2);
         word += letter;
         return word;
     }

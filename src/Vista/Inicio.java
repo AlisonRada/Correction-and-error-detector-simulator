@@ -27,6 +27,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author Alison
+ * @author Leonardo
  */
 public class Inicio extends javax.swing.JFrame {
 
@@ -709,6 +710,8 @@ public class Inicio extends javax.swing.JFrame {
         ind_1.setOpaque(true);
         resetColor(new JPanel[]{btn_2,btn_3}, new JPanel[]{ind_2, ind_3});
         upload_panel.setVisible(true);
+        detection_panel.setVisible(false);
+        correction_panel.setVisible(false);
     }//GEN-LAST:event_btn_1MousePressed
 
     private void btn_2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2MousePressed
@@ -716,6 +719,8 @@ public class Inicio extends javax.swing.JFrame {
         ind_2.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_3}, new JPanel[]{ind_1, ind_3});
         upload_panel.setVisible(false);
+        detection_panel.setVisible(true);
+        correction_panel.setVisible(false);
     }//GEN-LAST:event_btn_2MousePressed
 
     private void btn_3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_3MousePressed
@@ -723,6 +728,8 @@ public class Inicio extends javax.swing.JFrame {
         ind_3.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_2}, new JPanel[]{ind_1, ind_2});
         upload_panel.setVisible(false);
+        detection_panel.setVisible(false);
+        correction_panel.setVisible(true);
     }//GEN-LAST:event_btn_3MousePressed
 
     private void top_barMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_top_barMousePressed
