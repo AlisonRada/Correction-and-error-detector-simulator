@@ -17,4 +17,10 @@ public class Main {
        h.setVisible(true);
     }
     
+    public static String bintoString (String bin){
+        String word = "";   
+        char letter= (char)Integer.parseInt(bin, 2);
+        word += letter;
+        return word;
+    }
 }
