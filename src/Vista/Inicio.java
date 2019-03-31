@@ -860,61 +860,67 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_par_difusionActionPerformed
 
     private void par_detectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_par_detectActionPerformed
-        File dir = new File("resources/");
-        boolean correct = true;
-        File[] matches = dir.listFiles(new FilenameFilter()
-        {
-          @Override
-          public boolean accept(File dir, String name)
-          {
-             return (name.startsWith(namebtp.getText()) && name.endsWith(".btp"));
-          }
-        });
-        
-        File datawords = matches[0];
-        ArrayList<Word> dataword = new ArrayList<>();
-        try {
-            FileReader fr = new FileReader(datawords);
-            BufferedReader reader = new BufferedReader(fr);
-            String linea = reader.readLine();
-            
-            do {
-                Word aux = new Word(linea, true);
-                dataword.add(aux);
-                linea=reader.readLine();
-                if(aux.getCorrect())linea = reader. readLine();
-                else correct = false;
-                    
-            } while (reader.readLine()!=null && correct);
-            
-            if(!correct) JOptionPane.showMessageDialog(this, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Revisa porque yo no sé valecita", "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-        
-        if(correct){
-            try{
-                String name = datawords.getName();
-                FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length())+".txt");
-                BufferedWriter bw = new BufferedWriter(fw);
-                String line = "";
-                for(Word codeword : dataword){
-                    for (int i = 0; i < codeword.getDatawordLength(); i+=8) {
-                        line = line.concat(bintoString(codeword.getDataword().substring(i, i+8)));
-                        System.out.println();
-                    }
-                }
-                bw.write(line);
-                bw.close();
-                fw.close();
-                JOptionPane.showMessageDialog(this, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
-            } catch(IOException e) {
-                JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        if (namebtp.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            System.out.println("joavalcita barro");
+            File dir = new File("resources/");
+            boolean correct = true;
+            File[] matches = dir.listFiles(new FilenameFilter()
+            {
+              @Override
+              public boolean accept(File dir, String name)
+              {
+                 return (name.equals(namebtp.getText()+".btp"));
+              }
+            });
+            if(matches.length!=0){
+                File datawords = matches[0];
+                ArrayList<Word> dataword = new ArrayList<>();
+                try {
+                    FileReader fr = new FileReader(datawords);
+                    BufferedReader reader = new BufferedReader(fr);
+                    String linea = reader.readLine();
+
+                    do {
+                        Word aux = new Word(linea, true);
+                        dataword.add(aux);
+                        linea=reader.readLine();
+                        if(aux.getCorrect())linea = reader. readLine();
+                        else correct = false;
+
+                    } while (reader.readLine()!=null && correct);
+
+                    if(!correct) JOptionPane.showMessageDialog(this, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+                if(correct){
+                    try{
+                        String name = datawords.getName();
+                        FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length())+".txt");
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        String line = "";
+                        for(Word codeword : dataword){
+                            for (int i = 0; i < codeword.getDatawordLength(); i+=8) {
+                                line = line.concat(bintoString(codeword.getDataword().substring(i, i+8)));
+                                System.out.println();
+                            }
+                        }
+                        bw.write(line);
+                        bw.close();
+                        fw.close();
+                        JOptionPane.showMessageDialog(this, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
+                    } catch(IOException e) {
+                        JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    System.out.println("joavalcita barro");
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "No se ha encontrado el archivo. Por favor verifique el nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_par_detectActionPerformed
 
