@@ -12,7 +12,7 @@ public class HammingCode {
     int extension;
     String codeword;
     String dataword;
-    boolean correct;
+//    boolean correct;
     int error;
 
     public HammingCode(String word, int extension, boolean code) {
@@ -20,17 +20,18 @@ public class HammingCode {
             this.codeword = CodificarHamming(word, extension);
             this.dataword = word;
             this.extension = extension;
-            this.correct = true;
+//            this.correct = true;
             this.error = 0;
         } else { //Si ya me dan el codigo Hamming, pero debo corregir
             this.codeword = word;
-            this.correct = VerificarHamming(word);
+            this.dataword = getDataword(word);
+//            this.correct = VerificarHamming(word);
             this.error = getDecimal(SindromeHamming(word));
         }
 
     }
-
-    private String CodificarHamming(String dataword, int extension) {
+    
+     private String CodificarHamming(String dataword, int extension) {
         String b1, b2, b4, b8;
         if (extension == 1) {
             String t = "" + dataword.charAt(7) + dataword.charAt(6) + dataword.charAt(4) + dataword.charAt(3) + dataword.charAt(1);
@@ -98,11 +99,11 @@ public class HammingCode {
         }
     }
     
-    public int getDecimal(String binario){
+    private int getDecimal(String binario){
         return Integer.parseInt(binario, 2);
     }
 
-    public static String reverse(String palabra) {
+    private static String reverse(String palabra) {
         if (palabra.length() == 1) {
             return palabra;
         } else {
@@ -137,6 +138,29 @@ public class HammingCode {
             return "0";
         } else {
             return "1";
+        }
+    }
+    
+    /* Corrige el bit dañado */
+    private String CorregirCodeword(){
+        int bit = this.error;
+        String wrong = this.codeword;
+        String correctBit;
+        int posicion = wrong.length()-bit;
+        if (wrong.substring(posicion, posicion+1).compareTo("0")==0) {
+            correctBit = "1";
+        } else{
+            correctBit = "0";
+        }
+        return wrong.substring(0,posicion)+correctBit+wrong.substring(posicion+1);
+    }
+
+    /* Obtiene el dataword del codeword */
+    private String getDataword(String codeword) {
+        if (this.extension==1) {
+            return codeword.substring(0,4).concat(codeword.substring(5,8).concat(codeword.substring(9)));
+        } else{
+            return codeword.substring(0,5)+codeword.substring(6,13)+codeword.substring(14,17)+codeword.substring(18);
         }
     }
 
