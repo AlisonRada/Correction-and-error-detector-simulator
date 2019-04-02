@@ -42,7 +42,7 @@ public class Inicio extends javax.swing.JFrame {
     int x, y;
     File sourceFile = new File(System.getProperty("user.dir"));
     File btpFile = new File("resources");
-    ArrayList<Word> codewords = new ArrayList<>();
+    boolean valido;
     public Inicio() {
         initComponents();
         setTitle("Simulator");
@@ -320,11 +320,11 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, top_barLayout.createSequentialGroup()
                 .addGap(129, 129, 129)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(38, 38, 38)
                 .addComponent(minimize)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addGap(12, 12, 12))
         );
         top_barLayout.setVerticalGroup(
             top_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,24 +946,67 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_MinimizeMouseClicked
 
     private void generate_detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generate_detection_btnActionPerformed
-        if(codewords.isEmpty()){
+        ArrayList<Word> palabras = new ArrayList<>();
+
+        if (!valido) {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            try{
-                
-                String name = sourceFile.getName();
-                FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length()-4)+".btp");
-                BufferedWriter bw = new BufferedWriter(fw);
-                for(Word codeword : codewords){
-                    String line = codeword.getCodeword();
-                    bw.write(line);
-                    bw.newLine();
+        } else{
+            FileReader f1 = null; //Bandera para carácteres válidos
+            char character;
+            int value;
+            int control = 0;
+            String binary, aux;
+            try {
+                f1 = new FileReader(sourceFile);
+                BufferedReader reader = new BufferedReader(f1);
+                String linea = reader.readLine(); // leemos la unica linea
+                binary = "";
+                int j = 0;
+                while (j < linea.length()) {
+                    character = linea.charAt(j);
+                    value = (int)character;
+                    aux=decimalToBinary(value);
+                    while(aux.length()<8) aux="0"+aux;
+                    binary = binary.concat(aux);
+                    control++;
+                    if(control>=16 || j+1>=linea.length()){
+                        control=0;
+                        palabras.add(new Word(binary, false));
+                        binary="";
+                    }
+                    j++;
                 }
-                bw.close();
-                fw.close();
-                JOptionPane.showMessageDialog(this, "Archivo .btp generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
-            } catch(IOException e) {
-                JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                reader.close();
+                try{
+                    String name = sourceFile.getName();
+                    FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length()-4)+".btp");
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    for(Word codeword : palabras){
+                        String line = codeword.getCodeword();
+                        bw.write(line);
+                        bw.newLine();
+                    }
+                    bw.close();
+                    fw.close();
+                    JOptionPane.showMessageDialog(this, "Archivo .btp generado exitosamente", "Hecho", JOptionPane.INFORMATION_MESSAGE);
+                } catch(IOException e) {
+                    JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "El archivo se ha movido o eliminado","Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+
+            } finally {
+                try {
+                    if (f1 != null) {
+                        f1.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
@@ -1007,7 +1050,7 @@ public class Inicio extends javax.swing.JFrame {
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                    e.printStackTrace();
+                    
                 }
                 if(correct){
                     try{
@@ -1028,11 +1071,9 @@ public class Inicio extends javax.swing.JFrame {
                     } catch(IOException e) {
                         JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                }else{
-                    System.out.println("joavalcita barro");
                 }
             }else{
-                JOptionPane.showMessageDialog(this, "No se ha encontrado el archivo. Por favor verifique el nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_detection_btnActionPerformed
@@ -1069,13 +1110,11 @@ public class Inicio extends javax.swing.JFrame {
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
 
-        ArrayList<Word> palabras = new ArrayList<>();
-
         if (sourceFile==null) {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningún archivo", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
             FileReader f1 = null;
-            boolean valido = true; //Bandera para carácteres válidos
+            valido = true; //Boolean para carácteres válidos
             char character;
             int value;
             int control = 0;
@@ -1094,7 +1133,7 @@ public class Inicio extends javax.swing.JFrame {
                 }else{
                     binary = "";
                     int j = 0;
-                    while (j < linea.length()) {
+                    while (j < linea.length() && valido) {
                         character = linea.charAt(j);
                         value = (int)character;
                         //Si es un carácter válido
@@ -1105,14 +1144,11 @@ public class Inicio extends javax.swing.JFrame {
                             binary = binary.concat(aux);
                             control++;
                         } else{
-                            palabras.clear();
                             valido = false;
                             JOptionPane.showMessageDialog(this, "El archivo contiene caracteres invalidos", "Error", JOptionPane.ERROR_MESSAGE);
-                            break;
                         }
                         if(control>=16 || j+1>=linea.length()){
                             control=0;
-                            palabras.add(new Word(binary, false));
                             binary="";
                         }
                         j++;
@@ -1120,7 +1156,6 @@ public class Inicio extends javax.swing.JFrame {
                 }
                 reader.close();
                 if (valido) {
-                    codewords=palabras;
                     JOptionPane.showMessageDialog(this, "Proceso exitoso", "Archivo actualizado con éxito", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (FileNotFoundException ex) {
