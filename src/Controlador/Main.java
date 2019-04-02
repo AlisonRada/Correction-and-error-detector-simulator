@@ -13,9 +13,11 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -227,6 +229,45 @@ public class Main {
             }
     }
     /*Aún no decido si esto va a estar aquí y qué parte hará exactamente*/
+    
+    public static File errorRandom(File sourceFile, Component w, JTextField nrand, JTextField namebtp){
+        File dir = new File("resources/");
+        boolean correct = true;
+        File[] matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText()+".btp"));
+        if(matches.length!=0){
+            File codewords = matches[0];
+            try {
+                FileReader fr = new FileReader(codewords);
+                BufferedReader reader = new BufferedReader(fr);
+                int n = parseInt(nrand.getText());
+                int randomNum;
+                String linea = reader.readLine();
+                while (linea!=null) {
+                    for (int i = 0; i<linea.length() && n<0; i++) {
+                        randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);
+                        if (randomNum<5) {
+                            char[] aux = linea.toCharArray();
+                            aux[i] = negatebin(aux[i]);
+                            linea = String.valueOf(aux);
+                            n--;
+                        }
+                    }
+                    if(n>0 && reader.readLine()!=null) linea = reader.readLine();
+                    else if(n>0) reader.reset();
+                    else linea=null;
+                }
+                if(!correct) JOptionPane.showMessageDialog(w, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(w, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }else{
+            JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
     public void CreateNose(String nombre, String Path) {
         File Archivo;
         FileWriter w;
@@ -271,6 +312,7 @@ public class Main {
             System.out.println("Error en GetInfo");
         }
     }
+    
     public static String decimalToBinary(int n){
         if (n<=1) {
             return ""+n;
@@ -278,5 +320,10 @@ public class Main {
             //decimalToBinary(n/2);
             return ""+decimalToBinary(n/2)+n%2;
         }
+    }
+    
+    private static char negatebin(char bin){
+        if (bin=='0') return '1';
+        else return'0';   
     }
 }

@@ -112,7 +112,9 @@ public class Inicio extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         modify_detection_btn = new java.awt.Button();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nRand = new javax.swing.JTextField();
+        btpsource = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         detection_btn = new java.awt.Button();
         jLabel6 = new javax.swing.JLabel();
@@ -131,10 +133,8 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
-        setMaximumSize(new java.awt.Dimension(463, 544));
         setMinimumSize(new java.awt.Dimension(463, 544));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(463, 544));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         side_panel.setBackground(new java.awt.Color(13, 8, 24));
@@ -631,26 +631,49 @@ public class Inicio extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Número de bits a cambiar");
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+        nRand.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nRandActionPerformed(evt);
             }
         });
+        nRand.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nRandKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nRandKeyPressed(evt);
+            }
+        });
+
+        btpsource.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btpsourceActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel16.setText("Nombre de archivo .btp");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(modify_detection_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(modify_detection_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel16))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btpsource)
+                            .addComponent(nRand, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,10 +681,14 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                    .addComponent(nRand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btpsource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(modify_detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -688,7 +715,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(namebtp, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -721,7 +748,7 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -852,7 +879,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(573, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1014,7 +1041,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setBackground(Color.lightGray);
     }//GEN-LAST:event_jPanel3MouseDragged
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void nRandKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyTyped
         JTextField text = (JTextField) evt.getSource();
         text.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
@@ -1027,7 +1054,22 @@ public class Inicio extends javax.swing.JFrame {
                 }
             }
         });
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_nRandKeyTyped
+
+    private void btpsourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btpsourceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btpsourceActionPerformed
+
+    private void nRandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nRandActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nRandActionPerformed
+
+    private void nRandKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyPressed
+
+        if((!Character.isDigit(evt.getKeyChar())) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_DELETE)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_nRandKeyPressed
 
     
     
@@ -1091,6 +1133,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel btn_1;
     private javax.swing.JPanel btn_2;
     private javax.swing.JPanel btn_3;
+    private javax.swing.JTextField btpsource;
     private javax.swing.JPanel central_panel;
     private javax.swing.JLabel close;
     private javax.swing.JPanel correction_panel;
@@ -1110,6 +1153,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel27;
@@ -1128,12 +1172,12 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_1;
     private javax.swing.JLabel lbl_2;
     private javax.swing.JLabel lbl_3;
     private javax.swing.JLabel minimize;
     private java.awt.Button modify_detection_btn;
+    private javax.swing.JTextField nRand;
     private javax.swing.JTextField namebtp;
     private javax.swing.JPanel recepcion_correction_panel;
     private javax.swing.JPanel side_panel;
