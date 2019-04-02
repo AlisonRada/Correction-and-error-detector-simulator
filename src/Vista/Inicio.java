@@ -1,7 +1,7 @@
 
 package Vista;
 
-import static Controlador.Main.bintoString;
+import static Controlador.Main.*;
 import Modelo.HammingCode;
 import Modelo.Word;
 import java.awt.Color;
@@ -40,7 +40,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     
     int x, y;
-    File sourceFile = new File(System.getProperty("user.dir"));
+    File sourceFile;
     File btpFile = new File("resources");
     boolean valido;
     public Inicio() {
@@ -946,68 +946,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_MinimizeMouseClicked
 
     private void generate_detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generate_detection_btnActionPerformed
-        ArrayList<Word> palabras = new ArrayList<>();
-
         if (!valido) {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
-            FileReader f1 = null; //Bandera para carácteres válidos
-            char character;
-            int value;
-            int control = 0;
-            String binary, aux;
-            try {
-                f1 = new FileReader(sourceFile);
-                BufferedReader reader = new BufferedReader(f1);
-                String linea = reader.readLine(); // leemos la unica linea
-                binary = "";
-                int j = 0;
-                while (j < linea.length()) {
-                    character = linea.charAt(j);
-                    value = (int)character;
-                    aux=decimalToBinary(value);
-                    while(aux.length()<8) aux="0"+aux;
-                    binary = binary.concat(aux);
-                    control++;
-                    if(control>=16 || j+1>=linea.length()){
-                        control=0;
-                        palabras.add(new Word(binary, false));
-                        binary="";
-                    }
-                    j++;
-                }
-                reader.close();
-                try{
-                    String name = sourceFile.getName();
-                    FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length()-4)+".btp");
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    for(Word codeword : palabras){
-                        String line = codeword.getCodeword();
-                        bw.write(line);
-                        bw.newLine();
-                    }
-                    bw.close();
-                    fw.close();
-                    JOptionPane.showMessageDialog(this, "Archivo .btp generado exitosamente", "Hecho", JOptionPane.INFORMATION_MESSAGE);
-                } catch(IOException e) {
-                    JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "El archivo se ha movido o eliminado","Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-
-            } finally {
-                try {
-                    if (f1 != null) {
-                        f1.close();
-                    }
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+            GenerateParitytxt(sourceFile, this);
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
 
@@ -1019,62 +961,7 @@ public class Inicio extends javax.swing.JFrame {
         if (namebtp.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            File dir = new File("resources/");
-            boolean correct = true;
-            File[] matches = dir.listFiles(new FilenameFilter()
-            {
-              @Override
-              public boolean accept(File dir, String name)
-              {
-                 return (name.equals(namebtp.getText()+".btp"));
-              }
-            });
-            if(matches.length!=0){
-                File datawords = matches[0];
-                ArrayList<Word> dataword = new ArrayList<>();
-                try {
-                    FileReader fr = new FileReader(datawords);
-                    BufferedReader reader = new BufferedReader(fr);
-                    String linea = reader.readLine();
-
-                    do {
-                        Word aux = new Word(linea, true);
-                        dataword.add(aux);
-                        linea=reader.readLine();
-                        if(aux.getCorrect())linea = reader. readLine();
-                        else correct = false;
-
-                    } while (reader.readLine()!=null && correct);
-
-                    if(!correct) JOptionPane.showMessageDialog(this, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                    
-                }
-                if(correct){
-                    try{
-                        String name = datawords.getName();
-                        FileWriter fw = new FileWriter("resources/"+name.substring(0, name.length())+".txt");
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        String line = "";
-                        for(Word codeword : dataword){
-                            for (int i = 0; i < codeword.getDatawordLength(); i+=8) {
-                                line = line.concat(bintoString(codeword.getDataword().substring(i, i+8)));
-                                System.out.println();
-                            }
-                        }
-                        bw.write(line);
-                        bw.close();
-                        fw.close();
-                        JOptionPane.showMessageDialog(this, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
-                    } catch(IOException e) {
-                        JOptionPane.showMessageDialog(this, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            DetectParitytxt(sourceFile, this, namebtp);
         }
     }//GEN-LAST:event_detection_btnActionPerformed
 
@@ -1109,76 +996,12 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_validateFile6ActionPerformed
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
-
-        if (sourceFile==null) {
-            JOptionPane.showMessageDialog(this, "No ha seleccionado ningún archivo", "Error", JOptionPane.ERROR_MESSAGE);
-        } else{
-            FileReader f1 = null;
-            valido = true; //Boolean para carácteres válidos
-            char character;
-            int value;
-            int control = 0;
-            String binary, aux;
-            try {
-                f1 = new FileReader(sourceFile);
-                BufferedReader reader = new BufferedReader(f1);
-                String linea = reader.readLine(); // leemos la unica linea
-
-                if(linea==null){                 //Verificamos que no este vacia
-                    JOptionPane.showMessageDialog(this, "Por favor verifique que el archivo contiene texto","Error", JOptionPane.ERROR_MESSAGE);
-                    valido = false;
-                }else if (reader.readLine()!=null){ //Comprobamos que tenga solo una linea
-                    JOptionPane.showMessageDialog(this, "Por favor verifique que el archivo tiene solo una linea", "Error", JOptionPane.ERROR_MESSAGE);
-                    valido = false;
-                }else{
-                    binary = "";
-                    int j = 0;
-                    while (j < linea.length() && valido) {
-                        character = linea.charAt(j);
-                        value = (int)character;
-                        //Si es un carácter válido
-                        if (value > 64 && value<91 || value > 96 && value < 123 ||
-                            value == 58 && value == 59 || value ==44 || value == 46) {
-                            aux=decimalToBinary(value);
-                            while(aux.length()<8) aux="0"+aux;
-                            binary = binary.concat(aux);
-                            control++;
-                        } else{
-                            valido = false;
-                            JOptionPane.showMessageDialog(this, "El archivo contiene caracteres invalidos", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                        if(control>=16 || j+1>=linea.length()){
-                            control=0;
-                            binary="";
-                        }
-                        j++;
-                    }
-                }
-                reader.close();
-                if (valido) {
-                    JOptionPane.showMessageDialog(this, "Proceso exitoso", "Archivo actualizado con éxito", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(this, "El archivo se ha movido o eliminado","Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-
-            } finally {
-                try {
-                    if (f1 != null) {
-                        f1.close();
-                    }
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+        valido=ValidFile(sourceFile, this);
     }//GEN-LAST:event_validateFileActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         JFileChooser fc = new JFileChooser();
-        fc.setCurrentDirectory(sourceFile);
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fc.showOpenDialog(jPanel3);
         try{
             sourceFile = fc.getSelectedFile();
@@ -1188,7 +1011,6 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void jPanel3MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseDragged
-
         jPanel3.setBackground(Color.lightGray);
     }//GEN-LAST:event_jPanel3MouseDragged
 
@@ -1207,14 +1029,7 @@ public class Inicio extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jTextField1KeyTyped
 
-    private static String decimalToBinary(int n){
-        if (n<=1) {
-            return ""+n;
-        } else{
-            //decimalToBinary(n/2);
-            return ""+decimalToBinary(n/2)+n%2;
-        }
-    }
+    
     
     /**
      * @param args the command line arguments
