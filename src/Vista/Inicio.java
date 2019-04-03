@@ -89,18 +89,22 @@ public class Inicio extends javax.swing.JFrame {
         inferior_correction_pnl = new javax.swing.JPanel();
         envio_correction_panel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        validateFile4 = new java.awt.Button();
+        send_correction_btn = new java.awt.Button();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        pathFileCharged = new javax.swing.JLabel();
         transmision_correction_panel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         bits_ruido_field = new javax.swing.JTextField();
-        validateFile5 = new java.awt.Button();
+        transmit_correction_btn = new java.awt.Button();
+        jLabel17 = new javax.swing.JLabel();
+        sourceHam = new javax.swing.JTextField();
         recepcion_correction_panel = new javax.swing.JPanel();
-        validateFile6 = new java.awt.Button();
+        receive_correction_btn = new java.awt.Button();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        hamFile = new javax.swing.JTextField();
         top_correction_pnl = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         detection_panel = new javax.swing.JPanel();
@@ -109,6 +113,9 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         generate_detection_btn = new java.awt.Button();
+        pathFileCharged1 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         modify_detection_btn = new java.awt.Button();
         jLabel5 = new javax.swing.JLabel();
@@ -133,8 +140,10 @@ public class Inicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
-        setMinimumSize(new java.awt.Dimension(463, 544));
+        setMaximumSize(new java.awt.Dimension(454, 544));
+        setMinimumSize(new java.awt.Dimension(454, 544));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(454, 544));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         side_panel.setBackground(new java.awt.Color(13, 8, 24));
@@ -320,11 +329,11 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, top_barLayout.createSequentialGroup()
                 .addGap(129, 129, 129)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(26, 26, 26)
                 .addComponent(minimize)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addGap(28, 28, 28))
         );
         top_barLayout.setVerticalGroup(
             top_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,9 +350,9 @@ public class Inicio extends javax.swing.JFrame {
         central_panel.setPreferredSize(new java.awt.Dimension(1356, 517));
         central_panel.setLayout(null);
 
-        correction_panel.setMaximumSize(new java.awt.Dimension(342, 514));
-        correction_panel.setMinimumSize(new java.awt.Dimension(342, 514));
-        correction_panel.setPreferredSize(new java.awt.Dimension(342, 514));
+        correction_panel.setMaximumSize(new java.awt.Dimension(334, 514));
+        correction_panel.setMinimumSize(new java.awt.Dimension(334, 514));
+        correction_panel.setPreferredSize(new java.awt.Dimension(334, 514));
         correction_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         inferior_correction_pnl.setBackground(new java.awt.Color(255, 255, 255));
@@ -357,22 +366,22 @@ public class Inicio extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Longitud de ASCII");
 
-        validateFile4.setBackground(new java.awt.Color(146, 98, 144));
-        validateFile4.setForeground(new java.awt.Color(255, 255, 255));
-        validateFile4.setLabel("Send");
-        validateFile4.addActionListener(new java.awt.event.ActionListener() {
+        send_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        send_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
+        send_correction_btn.setLabel("Send");
+        send_correction_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validateFile4ActionPerformed(evt);
+                send_correction_btnActionPerformed(evt);
             }
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel7.setText("Ruta:");
+        jLabel7.setText("Archivo:");
 
         jLabel12.setForeground(new java.awt.Color(146, 98, 144));
-        jLabel12.setText("Ruta del archivo cargado en memoria");
+        jLabel12.setText("Nombre del archivo cargado en memoria");
 
         javax.swing.GroupLayout envio_correction_panelLayout = new javax.swing.GroupLayout(envio_correction_panel);
         envio_correction_panel.setLayout(envio_correction_panelLayout);
@@ -380,39 +389,41 @@ public class Inicio extends javax.swing.JFrame {
             envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(envio_correction_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(envio_correction_panelLayout.createSequentialGroup()
                 .addGroup(envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, envio_correction_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(envio_correction_panelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
+                        .addGap(8, 8, 8)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(validateFile4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(send_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(envio_correction_panelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pathFileCharged, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(envio_correction_panelLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         envio_correction_panelLayout.setVerticalGroup(
             envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(envio_correction_panelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(envio_correction_panelLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel12))
-                    .addGroup(envio_correction_panelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGap(34, 34, 34)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel7))
+                    .addComponent(pathFileCharged, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addGap(14, 14, 14)
                 .addGroup(envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(envio_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(envio_correction_panelLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(validateFile4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(send_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -429,14 +440,17 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        validateFile5.setBackground(new java.awt.Color(146, 98, 144));
-        validateFile5.setForeground(new java.awt.Color(255, 255, 255));
-        validateFile5.setLabel("Transmitir");
-        validateFile5.addActionListener(new java.awt.event.ActionListener() {
+        transmit_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        transmit_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
+        transmit_correction_btn.setLabel("Transmit");
+        transmit_correction_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validateFile5ActionPerformed(evt);
+                transmit_correction_btnActionPerformed(evt);
             }
         });
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel17.setText("Archivo .ham ");
 
         javax.swing.GroupLayout transmision_correction_panelLayout = new javax.swing.GroupLayout(transmision_correction_panel);
         transmision_correction_panel.setLayout(transmision_correction_panelLayout);
@@ -444,13 +458,21 @@ public class Inicio extends javax.swing.JFrame {
             transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(transmision_correction_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bits_ruido_field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transmision_correction_panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(validateFile5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, transmision_correction_panelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(transmit_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(transmision_correction_panelLayout.createSequentialGroup()
+                        .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(transmision_correction_panelLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bits_ruido_field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(transmision_correction_panelLayout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(sourceHam, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 20, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         transmision_correction_panelLayout.setVerticalGroup(
@@ -460,8 +482,12 @@ public class Inicio extends javax.swing.JFrame {
                 .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(bits_ruido_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(validateFile5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(sourceHam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(transmit_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -469,48 +495,53 @@ public class Inicio extends javax.swing.JFrame {
         recepcion_correction_panel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recepción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(146, 98, 144))); // NOI18N
         recepcion_correction_panel.setForeground(new java.awt.Color(146, 98, 144));
 
-        validateFile6.setBackground(new java.awt.Color(146, 98, 144));
-        validateFile6.setForeground(new java.awt.Color(255, 255, 255));
-        validateFile6.setLabel("Recibir");
-        validateFile6.addActionListener(new java.awt.event.ActionListener() {
+        receive_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        receive_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
+        receive_correction_btn.setLabel("Receive");
+        receive_correction_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validateFile6ActionPerformed(evt);
+                receive_correction_btnActionPerformed(evt);
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel14.setText("Ruta:");
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel14.setText("Archivo .ham ");
 
         jLabel15.setForeground(new java.awt.Color(146, 98, 144));
-        jLabel15.setText("Archivo de chequeo cargado en memoria");
+        jLabel15.setText("Nombre del archivo de chequeo para corregir");
 
         javax.swing.GroupLayout recepcion_correction_panelLayout = new javax.swing.GroupLayout(recepcion_correction_panel);
         recepcion_correction_panel.setLayout(recepcion_correction_panelLayout);
         recepcion_correction_panelLayout.setHorizontalGroup(
             recepcion_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(recepcion_correction_panelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(recepcion_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(recepcion_correction_panelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel15))
-                    .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recepcion_correction_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(validateFile6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(receive_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+            .addGroup(recepcion_correction_panelLayout.createSequentialGroup()
+                .addGroup(recepcion_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recepcion_correction_panelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hamFile, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(recepcion_correction_panelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel15)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         recepcion_correction_panelLayout.setVerticalGroup(
             recepcion_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recepcion_correction_panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel15)
+                .addGroup(recepcion_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(hamFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(validateFile6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(receive_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout inferior_correction_pnlLayout = new javax.swing.GroupLayout(inferior_correction_pnl);
@@ -520,10 +551,10 @@ public class Inicio extends javax.swing.JFrame {
             .addGroup(inferior_correction_pnlLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(inferior_correction_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(envio_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(transmision_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(recepcion_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(envio_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                    .addComponent(recepcion_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         inferior_correction_pnlLayout.setVerticalGroup(
             inferior_correction_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -567,11 +598,11 @@ public class Inicio extends javax.swing.JFrame {
         correction_panel.add(top_correction_pnl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, -1));
 
         central_panel.add(correction_panel);
-        correction_panel.setBounds(0, 0, 342, 514);
+        correction_panel.setBounds(0, 0, 334, 514);
 
         detection_panel.setMaximumSize(new java.awt.Dimension(334, 514));
         detection_panel.setMinimumSize(new java.awt.Dimension(334, 514));
-        detection_panel.setPreferredSize(new java.awt.Dimension(342, 514));
+        detection_panel.setPreferredSize(new java.awt.Dimension(334, 514));
         detection_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -582,7 +613,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Envío", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(146, 98, 144))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Generar palabra de código");
+        jLabel3.setText("Generar palabras de códigos");
 
         generate_detection_btn.setBackground(new java.awt.Color(146, 98, 144));
         generate_detection_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -593,26 +624,45 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setText("Archivo:");
+
+        jLabel19.setForeground(new java.awt.Color(146, 98, 144));
+        jLabel19.setText("Nombre del archivo cargado en memoria");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(generate_detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(generate_detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pathFileCharged1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(generate_detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addComponent(pathFileCharged1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(generate_detection_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -748,7 +798,7 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,7 +841,7 @@ public class Inicio extends javax.swing.JFrame {
         detection_panel.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 60));
 
         central_panel.add(detection_panel);
-        detection_panel.setBounds(0, 0, 342, 514);
+        detection_panel.setBounds(0, 0, 334, 514);
 
         upload_panel.setMaximumSize(new java.awt.Dimension(342, 308));
         upload_panel.setMinimumSize(new java.awt.Dimension(342, 308));
@@ -938,6 +988,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_1MousePressed
 
     private void btn_2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_2MousePressed
+        if (valido) {
+            pathFileCharged1.setText(sourceFile.getName());
+            validate();
+        }
         setColor(btn_2); 
         ind_2.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_3}, new JPanel[]{ind_1, ind_3});
@@ -947,6 +1001,10 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_2MousePressed
 
     private void btn_3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_3MousePressed
+        if (valido) {
+            pathFileCharged.setText(sourceFile.getName());
+            validate();
+        }
         setColor(btn_3); 
         ind_3.setOpaque(true);
         resetColor(new JPanel[]{btn_1,btn_2}, new JPanel[]{ind_1, ind_2});
@@ -976,7 +1034,7 @@ public class Inicio extends javax.swing.JFrame {
         if (!valido) {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
-            GenerateParitytxt(sourceFile, this);
+            GenerateCode(sourceFile, -1, this, 0);
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
 
@@ -988,16 +1046,19 @@ public class Inicio extends javax.swing.JFrame {
         if (namebtp.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            DetectParitytxt(sourceFile, this, namebtp);
+            DetectParityTxt(sourceFile, this, namebtp);
         }
     }//GEN-LAST:event_detection_btnActionPerformed
 
-    private void validateFile4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFile4ActionPerformed
-        ArrayList<HammingCode> hamming = new ArrayList<>();
-        int categoria1 = Integer.parseInt((String) jComboBox1.getSelectedItem());
-        System.out.println(categoria1);
+    private void send_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_correction_btnActionPerformed
+       if (!valido) {
+            JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
+        } else{
+           GenerateCode(sourceFile, Integer.parseInt((String) jComboBox1.getSelectedItem()), this, 1);
+//            GenerateHammingCodeTxt(sourceFile,Integer.parseInt((String) jComboBox1.getSelectedItem()),this);
+        }
         
-    }//GEN-LAST:event_validateFile4ActionPerformed
+    }//GEN-LAST:event_send_correction_btnActionPerformed
 
     private void bits_ruido_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bits_ruido_fieldKeyTyped
         JTextField text = (JTextField) evt.getSource();
@@ -1014,13 +1075,21 @@ public class Inicio extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_bits_ruido_fieldKeyTyped
 
-    private void validateFile5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFile5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_validateFile5ActionPerformed
+    private void transmit_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmit_correction_btnActionPerformed
+        if (sourceHam.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            //
+        }
+    }//GEN-LAST:event_transmit_correction_btnActionPerformed
 
-    private void validateFile6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFile6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_validateFile6ActionPerformed
+    private void receive_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receive_correction_btnActionPerformed
+        if (hamFile.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            //CorrectHammingTxt(sourceFile, this, hamFile);
+        }
+    }//GEN-LAST:event_receive_correction_btnActionPerformed
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
         valido=ValidFile(sourceFile, this);
@@ -1141,6 +1210,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel detection_panel;
     private javax.swing.JPanel envio_correction_panel;
     private java.awt.Button generate_detection_btn;
+    private javax.swing.JTextField hamFile;
     private javax.swing.JPanel ind_1;
     private javax.swing.JPanel ind_2;
     private javax.swing.JPanel ind_3;
@@ -1154,6 +1224,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel27;
@@ -1179,15 +1252,18 @@ public class Inicio extends javax.swing.JFrame {
     private java.awt.Button modify_detection_btn;
     private javax.swing.JTextField nRand;
     private javax.swing.JTextField namebtp;
+    private javax.swing.JLabel pathFileCharged;
+    private javax.swing.JLabel pathFileCharged1;
+    private java.awt.Button receive_correction_btn;
     private javax.swing.JPanel recepcion_correction_panel;
+    private java.awt.Button send_correction_btn;
     private javax.swing.JPanel side_panel;
+    private javax.swing.JTextField sourceHam;
     private javax.swing.JPanel top_bar;
     private javax.swing.JPanel top_correction_pnl;
     private javax.swing.JPanel transmision_correction_panel;
+    private java.awt.Button transmit_correction_btn;
     private javax.swing.JPanel upload_panel;
     private java.awt.Button validateFile;
-    private java.awt.Button validateFile4;
-    private java.awt.Button validateFile5;
-    private java.awt.Button validateFile6;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,6 +30,16 @@ public class HammingCode {
         }
 
     }
+
+    public String getCodeword() {
+        return codeword;
+    }
+
+    public int getError() {
+        return error;
+    }
+    
+    
     
      private String CodificarHamming(String dataword, int extension) {
         String b1, b2, b4, b8;
@@ -142,7 +152,7 @@ public class HammingCode {
     }
     
     /* Corrige el bit dañado */
-    private String CorregirCodeword(){
+    public String CorregirCodeword(){
         int bit = this.error;
         String wrong = this.codeword;
         String correctBit;
@@ -156,7 +166,7 @@ public class HammingCode {
     }
 
     /* Obtiene el dataword del codeword */
-    private String getDataword(String codeword) {
+    public String getDataword(String codeword) {
         if (this.extension==1) {
             return codeword.substring(0,4).concat(codeword.substring(5,8).concat(codeword.substring(9)));
         } else{
