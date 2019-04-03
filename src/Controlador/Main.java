@@ -332,7 +332,6 @@ public class Main {
 
     public static File errorRandom(File sourceFile, Component w, JTextField nrand, JTextField namebtp) {
         File dir = new File("resources/");
-        boolean correct = true;
         File[] matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".btp"));
         if (matches.length != 0) {
             File codewords = matches[0];
@@ -341,29 +340,45 @@ public class Main {
                 BufferedReader reader = new BufferedReader(fr);
                 int n = parseInt(nrand.getText());
                 int randomNum;
-                String linea = reader.readLine();
-                while (linea != null) {
-                    for (int i = 0; i < linea.length() && n < 0; i++) {
-                        randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);
-                        if (randomNum < 5) {
+                ArrayList<String> modfile = new ArrayList<>(); 
+                while (reader.readLine()!=null) {
+                    modfile.add(reader.readLine()); //Mueve el archivo a un array de Strings (modfile).
+                }
+                reader.close();
+                //Aqui empieza la modificacion random
+                String linea;
+                int[][] changed = new int[modfile.size()][modfile.get(0).length()];
+                int j = 0;
+                boolean ended = true;
+                while (j<modfile.size() && !ended) { //Dos while anidados para iterar entre los caracteres del archivo
+                    linea = modfile.get(j);
+                    int i = 0;
+                    while (i < linea.length() && n>0) {
+                        randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1); //0 es el minimo y 10 el maximo
+                        if (randomNum < 5 && changed[j][i]!=1) { //Como es la mitad del rango es 50% de probabilidad
                             char[] aux = linea.toCharArray();
                             aux[i] = negatebin(aux[i]);
                             linea = String.valueOf(aux);
+                            changed[j][i]=1; //La matriz changed controla si ese bit ya fue cambiado en caso de que esté volviendo a leer el archivo de nuevo
                             n--;
                         }
+                        i++;
                     }
-                    if (n > 0 && reader.readLine() != null) {
-                        linea = reader.readLine();
+                    /*
+                    Ahora verifica si se modificaron los n bits. En caso de no haber modificado los n bits
+                    y de haberse acabado el archivo, se resetea j para iterar nuevamente sobre todo el
+                    archivo, teniendo control sobre cual fué cambiado. En los otros dos casos solo indica
+                    como terminado si n es 0, y aumenta j cuando aun no se modifican los n bits.
+                    */
+                    if (n > 0 && j+1<modfile.size()) { 
+                        modfile.add(j, linea);         
+                        j++;
                     } else if (n > 0) {
-                        reader.reset();
+                        j=0;
                     } else {
-                        linea = null;
+                        ended=true;
                     }
                 }
-                if (!correct) {
-                    JOptionPane.showMessageDialog(w, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
-                }
-
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(w, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
             }
