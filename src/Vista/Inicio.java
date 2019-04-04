@@ -1087,7 +1087,7 @@ public class Inicio extends javax.swing.JFrame {
         if (hamFile.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            //CorrectHammingTxt(sourceFile, this, hamFile);
+            CorrectHammingTxt(sourceFile, this, hamFile);
         }
     }//GEN-LAST:event_receive_correction_btnActionPerformed
 

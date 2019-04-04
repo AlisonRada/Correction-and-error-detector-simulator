@@ -15,17 +15,23 @@ public class HammingCode {
 //    boolean correct;
     int error;
 
-    public HammingCode(String word, int extension, boolean code) {
+    public HammingCode(String word, boolean code) {
         if (code) { //Si es necesario codificar para hallar el codigo Hamming
-            this.codeword = CodificarHamming(word, extension);
+            this.extension = word.length()/8;
+            this.codeword = CodificarHamming(word);
             this.dataword = word;
-            this.extension = extension;
 //            this.correct = true;
             this.error = 0;
         } else { //Si ya me dan el codigo Hamming, pero debo corregir
             this.codeword = word;
-            this.dataword = getDataword(word);
+            if (word.length()==12) {
+                this.extension = 1;
+            } else{
+                this.extension = 2;
+            }
+            this.dataword = getDataword();
 //            this.correct = VerificarHamming(word);
+            System.out.println("El síndrome es: "+SindromeHamming(word));
             this.error = getDecimal(SindromeHamming(word));
         }
 
@@ -41,9 +47,9 @@ public class HammingCode {
     
     
     
-     private String CodificarHamming(String dataword, int extension) {
+     private String CodificarHamming(String dataword) {
         String b1, b2, b4, b8;
-        if (extension == 1) {
+        if (this.extension == 1) {
             String t = "" + dataword.charAt(7) + dataword.charAt(6) + dataword.charAt(4) + dataword.charAt(3) + dataword.charAt(1);
             b1 = XOR(t);
             t = "" + dataword.charAt(7) + dataword.charAt(5) + dataword.charAt(4) + dataword.charAt(2) + dataword.charAt(1);
@@ -82,7 +88,7 @@ public class HammingCode {
         }
     }
 
-    private String SindromeHamming(String codeword) {
+    public String SindromeHamming(String codeword) {
         String c1, c2, c4, c8, temp;
         if (this.extension == 1) {
             temp = "" +codeword.charAt(11)+codeword.charAt(9) + codeword.charAt(7) + codeword.charAt(5) + codeword.charAt(3) + codeword.charAt(1);
@@ -152,7 +158,7 @@ public class HammingCode {
     }
     
     /* Corrige el bit dañado */
-    public String CorregirCodeword(){
+    public void CorregirCodeword(){
         int bit = this.error;
         String wrong = this.codeword;
         String correctBit;
@@ -162,15 +168,16 @@ public class HammingCode {
         } else{
             correctBit = "0";
         }
-        return wrong.substring(0,posicion)+correctBit+wrong.substring(posicion+1);
+        this.codeword = wrong.substring(0,posicion)+correctBit+wrong.substring(posicion+1);
     }
 
     /* Obtiene el dataword del codeword */
-    public String getDataword(String codeword) {
+    public String getDataword() {
         if (this.extension==1) {
-            return codeword.substring(0,4).concat(codeword.substring(5,8).concat(codeword.substring(9)));
+            return this.codeword.substring(0,4).concat(this.codeword.substring(5,8).concat(this.codeword.substring(9,10)));
         } else{
-            return codeword.substring(0,5)+codeword.substring(6,13)+codeword.substring(14,17)+codeword.substring(18);
+    
+            return this.codeword.substring(0,5)+this.codeword.substring(6,13)+this.codeword.substring(14,17)+this.codeword.substring(18,19);
         }
     }
 

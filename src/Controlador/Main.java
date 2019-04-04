@@ -37,10 +37,22 @@ public class Main {
         i.setVisible(true);
     }
 
-    public static String bintoString(String bin) {
+    public static String binToString(String bin) {
         String word = "";
-        char letter = (char) Integer.parseInt(bin, 2);
-        word += letter;
+        int aux = 1;
+        while (aux * 8 <= bin.length()) {
+            char letter = (char) Integer.parseInt(bin.substring(aux * 8 - 8, aux * 8), 2);
+            int value = (int) letter;
+            if (value > 64 && value < 91 || value > 96 && value < 123
+                    || value == 58 && value == 59 || value == 44 || value == 46) { //Si es un carácter válido
+                word += letter;
+            } else{
+                word += "?";
+            }
+            
+            aux++;
+        }
+
         return word;
     }
 
@@ -158,13 +170,9 @@ public class Main {
                         binary = "";
                     }
                 } else { //HammingCode
-                    if (extensionASCII == control || j == linea.length() - 1) { //Sinya cumple la extensión de caracteres o si se encuentra en la última linea
+                    if (extensionASCII == control || j == linea.length() - 1) { //Si ya cumple la extensión de caracteres o si se encuentra en la última linea
                         control = 0;
-                        if (j == linea.length() - 1 && extensionASCII == 2) {
-                            palabras1.add(new HammingCode(binary, 1, true));
-                        } else {
-                            palabras1.add(new HammingCode(binary, extensionASCII, true));
-                        }
+                        palabras1.add(new HammingCode(binary, true));
                         binary = "";
                     }
                 }
@@ -257,7 +265,7 @@ public class Main {
                     String line = "";
                     for (Word codeword : dataword) {
                         for (int i = 0; i < codeword.getDatawordLength(); i += 8) {
-                            line = line.concat(bintoString(codeword.getDataword().substring(i, i + 8)));
+                            line = line.concat(binToString(codeword.getDataword().substring(i, i + 8)));
                             System.out.println();
                         }
                     }
@@ -285,6 +293,7 @@ public class Main {
         });
         if (matches.length != 0) {
             File datawords = matches[0];
+            System.out.println(datawords.getAbsolutePath());
             try {
                 FileReader fr = new FileReader(datawords);
                 BufferedReader reader = new BufferedReader(fr);
@@ -294,37 +303,51 @@ public class Main {
                 BufferedWriter bw = new BufferedWriter(fw);
 
                 String line = ""; //Para escribir
-
                 String linea = reader.readLine(); //Para leer
 
-                int numASCII = 1;
-                if (linea.length() == 21) {
-                    numASCII = 2;
-                }
+                boolean plural = false;
+                int cont = 1;
 
                 do {
-                    HammingCode codeword_temp = new HammingCode(linea, numASCII, false);
+                    System.out.println("Voy a verificar el siguiente codeword el siguiente codeword: " + linea);
+                    HammingCode codeword_temp = new HammingCode(linea, false);
+                    System.out.println("Mi error es: " + codeword_temp.getError());
                     if (codeword_temp.getError() != 0) { //Si hay error
-                        String code = codeword_temp.CorregirCodeword();
-                        line = line.concat(bintoString(codeword_temp.getDataword(code)));
-                        linea = reader.readLine();
+                        System.out.println("Encontré un error");
+                        if (codeword_temp.getError() < linea.length()) {
+                            codeword_temp.CorregirCodeword();
+                            line = line.concat(binToString(codeword_temp.getDataword()));
+                        } else {
+                            System.out.println("Sindrome de " + cont + ": " + codeword_temp.SindromeHamming(codeword_temp.getCodeword()));
+                            line = line.concat("?");
+                            plural = true;
+                        }
                         correct = false;
+                    } else {
+                        line = line.concat(binToString(codeword_temp.getDataword()));
                     }
+
+                    cont++;
+                    linea = reader.readLine();
+
                 } while (linea != null);
 
                 bw.write(line);
                 bw.close();
                 fw.close();
-                
+
                 if (!correct) {
                     JOptionPane.showMessageDialog(w, "Se han corregido errores en los datos", "Archivo corregido", JOptionPane.INFORMATION_MESSAGE);
                 }
+                if (plural) {
+                    JOptionPane.showMessageDialog(w, "Parece que por lo menos un código tiene más de un error, se ha corregido hasta donde se ha podido. Aquellos que no se pueden se ha reemplazado por ?", "Misión fallida", JOptionPane.ERROR_MESSAGE);
+                }
                 JOptionPane.showMessageDialog(w, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
-                
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(w, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -340,8 +363,8 @@ public class Main {
                 BufferedReader reader = new BufferedReader(fr);
                 int n = parseInt(nrand.getText());
                 int randomNum;
-                ArrayList<String> modfile = new ArrayList<>(); 
-                while (reader.readLine()!=null) {
+                ArrayList<String> modfile = new ArrayList<>();
+                while (reader.readLine() != null) {
                     modfile.add(reader.readLine()); //Mueve el archivo a un array de Strings (modfile).
                 }
                 reader.close();
@@ -350,16 +373,16 @@ public class Main {
                 int[][] changed = new int[modfile.size()][modfile.get(0).length()];
                 int j = 0;
                 boolean ended = true;
-                while (j<modfile.size() && !ended) { //Dos while anidados para iterar entre los caracteres del archivo
+                while (j < modfile.size() && !ended) { //Dos while anidados para iterar entre los caracteres del archivo
                     linea = modfile.get(j);
                     int i = 0;
-                    while (i < linea.length() && n>0) {
+                    while (i < linea.length() && n > 0) {
                         randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1); //0 es el minimo y 10 el maximo
-                        if (randomNum < 5 && changed[j][i]!=1) { //Como es la mitad del rango es 50% de probabilidad
+                        if (randomNum < 5 && changed[j][i] != 1) { //Como es la mitad del rango es 50% de probabilidad
                             char[] aux = linea.toCharArray();
                             aux[i] = negatebin(aux[i]);
                             linea = String.valueOf(aux);
-                            changed[j][i]=1; //La matriz changed controla si ese bit ya fue cambiado en caso de que esté volviendo a leer el archivo de nuevo
+                            changed[j][i] = 1; //La matriz changed controla si ese bit ya fue cambiado en caso de que esté volviendo a leer el archivo de nuevo
                             n--;
                         }
                         i++;
@@ -369,14 +392,14 @@ public class Main {
                     y de haberse acabado el archivo, se resetea j para iterar nuevamente sobre todo el
                     archivo, teniendo control sobre cual fué cambiado. En los otros dos casos solo indica
                     como terminado si n es 0, y aumenta j cuando aun no se modifican los n bits.
-                    */
-                    if (n > 0 && j+1<modfile.size()) { 
-                        modfile.add(j, linea);         
+                     */
+                    if (n > 0 && j + 1 < modfile.size()) {
+                        modfile.add(j, linea);
                         j++;
                     } else if (n > 0) {
-                        j=0;
+                        j = 0;
                     } else {
-                        ended=true;
+                        ended = true;
                     }
                 }
             } catch (Exception e) {
@@ -387,51 +410,6 @@ public class Main {
             JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
-    }
-
-    public void CreateFile(String nombre, String Path) {
-        File Archivo;
-        FileWriter w;
-        BufferedWriter bw;
-        PrintWriter wr;
-        nombre = nombre.substring(0, nombre.length() - 4);
-        Archivo = new File(Path + ".ham"); // Crea el archivo en la direccion dada con el nombre escogido
-        if (Archivo.exists()) {
-            Archivo.delete();
-            Archivo = new File(Path + ".ham");
-        }
-        try {
-            if (Archivo.createNewFile()) { // Verifica que el archivo se haya creado exitosamente
-                w = new FileWriter(Archivo); // Se prepara para escribir en el archivo
-                bw = new BufferedWriter(w);
-                wr = new PrintWriter(bw);
-                String dato;
-                for (int i = 0; i < code1.size(); i++) {
-                    dato = code1.get(i).toString();
-                    wr.write(dato);
-                    wr.write("\r\n");
-                }
-                wr.close();
-                bw.close();
-                JOptionPane.showMessageDialog(null, "Se ha creado exitosamente el archivo .ham");
-            }
-        } catch (IOException e) {
-            System.out.println("Ha habido un error creando el Archivo");
-        }
-    }
-
-    /*Esto tampoco*/
-    public static void ReadFile(File f, int tipo) {
-        String line, text = "";
-        try {
-            FileReader fr = new FileReader(f.getAbsolutePath());
-            BufferedReader br = new BufferedReader(fr);
-            line = br.readLine();
-            br.close();
-            fr.close();
-        } catch (IOException e) {
-            System.out.println("Error en GetInfo");
-        }
     }
 
     public static String decimalToBinary(int n) {
