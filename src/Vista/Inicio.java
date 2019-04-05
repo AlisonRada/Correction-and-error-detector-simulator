@@ -31,6 +31,7 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         setTitle("Simulator");
         setIconImage(new ImageIcon(getClass().getResource("../Imagenes/network-24.png")).getImage());
+        setLocationRelativeTo(null);
         infoWindow.setIconImage(new ImageIcon(getClass().getResource("../Imagenes/network-24.png")).getImage());
         infoWindow.setTitle("Mensaje");
         setColor(btn_1);
@@ -60,7 +61,6 @@ public class Inicio extends javax.swing.JFrame {
         topbar_infoWindow = new javax.swing.JPanel();
         close1 = new javax.swing.JLabel();
         minimize1 = new javax.swing.JLabel();
-        infoWindow_lbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         info_textPane = new javax.swing.JTextPane();
         jPanel5 = new javax.swing.JPanel();
@@ -135,7 +135,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
 
+        infoWindow.setLocationByPlatform(true);
+        infoWindow.setMaximumSize(new java.awt.Dimension(614, 579));
+        infoWindow.setMinimumSize(new java.awt.Dimension(614, 579));
         infoWindow.setUndecorated(true);
+        infoWindow.setPreferredSize(new java.awt.Dimension(614, 579));
         infoWindow.setResizable(false);
 
         topbar_infoWindow.setBackground(new java.awt.Color(146, 98, 144));
@@ -164,16 +168,12 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
-        infoWindow_lbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        infoWindow_lbl.setForeground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout topbar_infoWindowLayout = new javax.swing.GroupLayout(topbar_infoWindow);
         topbar_infoWindow.setLayout(topbar_infoWindowLayout);
         topbar_infoWindowLayout.setHorizontalGroup(
             topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topbar_infoWindowLayout.createSequentialGroup()
-                .addComponent(infoWindow_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(minimize1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,12 +182,11 @@ public class Inicio extends javax.swing.JFrame {
             topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(close1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
             .addComponent(minimize1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(infoWindow_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(info_textPane);
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(238, 238, 238));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(51, 255, 0));
@@ -1140,7 +1139,7 @@ public class Inicio extends javax.swing.JFrame {
         } else {
             GenerateCode(sourceFile, -1, this, 0, info_textPane);
             iniciarInfoWindow();
-            infoWindow_lbl.setText("Codificación Bit de Paridad");
+//            infoWindow_lbl.setText("Codificación Bit de Paridad");
             validate();
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
@@ -1168,7 +1167,7 @@ public class Inicio extends javax.swing.JFrame {
         } else {
             GenerateCode(sourceFile, Integer.parseInt((String) jComboBox1.getSelectedItem()), this, 1, info_textPane);
             iniciarInfoWindow();
-            infoWindow_lbl.setText("Codificación Hamming");
+//            infoWindow_lbl.setText("Codificación Hamming");
             validate();
         }
 
@@ -1204,7 +1203,7 @@ public class Inicio extends javax.swing.JFrame {
         } else {
             CorrectHammingTxt(sourceFile, this, hamFile.getText(), info_textPane);
             iniciarInfoWindow();
-            infoWindow_lbl.setText("Archivo .ham corregido");
+//            infoWindow_lbl.setText("Archivo .ham corregido");
             validate();
         }
     }//GEN-LAST:event_receive_correction_btnActionPerformed
@@ -1264,7 +1263,7 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_topbar_infoWindowMousePressed
 
     private void topbar_infoWindowMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topbar_infoWindowMouseDragged
-        infoWindow.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
+        infoWindow.setLocation(infoWindow.getLocation().x + evt.getX() - x, infoWindow.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_topbar_infoWindowMouseDragged
 
     private void minimize1MinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize1MinimizeMouseClicked
@@ -1278,6 +1277,7 @@ public class Inicio extends javax.swing.JFrame {
     private void iniciarInfoWindow() {
         infoWindow.setVisible(true);
         infoWindow.setSize(614, 579);
+        infoWindow.setLocationRelativeTo(null);
     }
 
     /**
@@ -1353,7 +1353,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel inferior_correction_pnl;
     private javax.swing.JPanel inferior_detection_pnl;
     private javax.swing.JFrame infoWindow;
-    private javax.swing.JLabel infoWindow_lbl;
     public javax.swing.JTextPane info_textPane;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

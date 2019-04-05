@@ -26,7 +26,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 /**
- *
  * @author Alison
  * @author Leonardo
  */
@@ -324,8 +323,6 @@ public class Main {
                 String linea = reader.readLine(); //Para leer
 
                 boolean plural = false;
-                int cont = 1;
-
                 SimpleAttributeSet attrs = new SimpleAttributeSet();
                 StyleConstants.setFontSize(attrs, 14);
                 String caracter;
@@ -334,7 +331,6 @@ public class Main {
                     HammingCode codeword_temp = new HammingCode(linea, false);
                     if (codeword_temp.getError() != 0) { //Si hay error
                         if (codeword_temp.getError() <= linea.length()) { //Un error que puede corregir
-                            System.out.println("Hubo error, pero lo puedo corregir");
                             codeword_temp.CorregirCodeword();
                             caracter = binToString(codeword_temp.getDataword());
                             int value = (int) caracter.charAt(0);
@@ -346,22 +342,18 @@ public class Main {
                             }
                             line = line.concat(caracter);
                         } else { //Un error que no puedo corregir
-                            System.out.println("Hubo error y no puedo corregir");
                             textoRojo(attrs, textPane, "?");
                             line = line.concat("?");
                             plural = true;
                         }
                         correct = false;
                     } else {
-                        System.out.println("No hubo error");
                         caracter = binToString(codeword_temp.getDataword());
                         textoNegrita(attrs, textPane, caracter);
                         line = line.concat(caracter);
                     }
 
-                    cont++;
                     linea = reader.readLine();
-//                    nuevaLinea(textPane);
 
                 } while (linea != null);
 
@@ -487,86 +479,17 @@ public class Main {
         }
     }
 
-    /*MANEJO DEL JTEXTPANE*/
-    public static void showText(File sourceFile, JTextPane textPane) {
-        if (sourceFile == null) {
-            JOptionPane.showMessageDialog(textPane, "No ha seleccionado ningún archivo", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            FileReader f1 = null;
-            int value;
-            int control = 0;
-            String binary, aux;
-            try {
-                f1 = new FileReader(sourceFile);
-                BufferedReader reader = new BufferedReader(f1);
-                String linea = reader.readLine(); // leemos la unica linea
-
-                if (linea == null) {                 //Verificamos que no este vacia
-                    JOptionPane.showMessageDialog(textPane, "Por favor verifique que el archivo contiene texto", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    binary = "";
-                    int j;
-                    while (linea != null) {
-                        SimpleAttributeSet attrs = new SimpleAttributeSet();
-                        j = 0;
-                        do {
-                            value = (int) linea.charAt(j);
-                            if (value > 64 && value < 91 || value > 96 && value < 123 || value == 32
-                                    || value == 58 && value == 59 || value == 44 || value == 46) { //Si es un carácter válido
-                                textoNegrita(attrs, textPane, linea.substring(j, j + 1));
-                            } else {
-                                textoRojo(attrs, textPane, linea.substring(j, j + 1));
-                            }
-                            j++;
-                        } while (j < linea.length());
-                        nuevaLinea(textPane);
-                        linea = reader.readLine();
-                    }
-                }
-                reader.close();
-                JOptionPane.showMessageDialog(textPane, "Proceso exitoso", "Archivo cargado con éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(textPane, "El archivo se ha movido o eliminado", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                System.out.println("Error inesperado");
-            } finally {
-                try {
-                    if (f1 != null) {
-                        f1.close();
-                    }
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-    }
-
     //Método para texto en negrita
     private static void textoNegrita(SimpleAttributeSet attrs, JTextPane text, String string) {
-
-        /*Para modificar el valor de estos atributos, nos ayuda la clase StyleConstants. 
-		Esta clase tiene muchos métodos para cambiar valores a una clase SimpleAttributeSet. 
-		En este caso concreto hemos usado setBold() para ponerlo en negrita.
-         */
         StyleConstants.setBold(attrs, true);
         StyleConstants.setForeground(attrs, Color.BLACK);
-
-        /*Obtenemos el StyledDocument, que es lo que el JTextPane tiene dentro y 
-		representa al texto que estamos viendo.
-		El StyledDocument tiene un método insert() que admite tres parámetros:
-			- Posición en la que se quiere insetar el texto dentro del documento.
-			- El texto
-			- Los atributos del texto.
-		Como queremos insertar al final, la posición es justo la longitud del texto,
-		esto se obtiene con el método getLength().
-         */
+        
         try {
             text.getStyledDocument().insertString(
                     text.getStyledDocument().getLength(), string, attrs);
         } catch (BadLocationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     private static void textoRojo(SimpleAttributeSet attrs, JTextPane text, String string) {
