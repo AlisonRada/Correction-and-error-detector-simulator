@@ -1,4 +1,3 @@
-
 package Vista;
 
 import static Controlador.Main.*;
@@ -23,24 +22,26 @@ public class Inicio extends javax.swing.JFrame {
     /**
      * Creates new form Inicio
      */
-    
     int x, y;
     File sourceFile;
     File btpFile = new File("resources");
     boolean valido;
+
     public Inicio() {
         initComponents();
         setTitle("Simulator");
         setIconImage(new ImageIcon(getClass().getResource("../Imagenes/network-24.png")).getImage());
-        setColor(btn_1); 
+        infoWindow.setIconImage(new ImageIcon(getClass().getResource("../Imagenes/network-24.png")).getImage());
+        infoWindow.setTitle("Mensaje");
+        setColor(btn_1);
         ind_1.setOpaque(true);
         upload_panel.setVisible(true);
         detection_panel.setVisible(false);
         correction_panel.setVisible(false);
-        resetColor(new JPanel[]{btn_2,btn_3}, new JPanel[]{ind_2, ind_3});
+        resetColor(new JPanel[]{btn_2, btn_3}, new JPanel[]{ind_2, ind_3});
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         //jProgressBar1.setValue(50);
@@ -55,6 +56,17 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        infoWindow = new javax.swing.JFrame();
+        topbar_infoWindow = new javax.swing.JPanel();
+        close1 = new javax.swing.JLabel();
+        minimize1 = new javax.swing.JLabel();
+        infoWindow_lbl = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        info_textPane = new javax.swing.JTextPane();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         side_panel = new javax.swing.JPanel();
         btn_1 = new javax.swing.JPanel();
         ind_1 = new javax.swing.JPanel();
@@ -93,7 +105,7 @@ public class Inicio extends javax.swing.JFrame {
         top_correction_pnl = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         detection_panel = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        inferior_detection_pnl = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -111,7 +123,7 @@ public class Inicio extends javax.swing.JFrame {
         detection_btn = new java.awt.Button();
         jLabel6 = new javax.swing.JLabel();
         namebtp = new javax.swing.JTextField();
-        jPanel13 = new javax.swing.JPanel();
+        top_detection_pnl = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         upload_panel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -122,6 +134,115 @@ public class Inicio extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+
+        infoWindow.setUndecorated(true);
+        infoWindow.setResizable(false);
+
+        topbar_infoWindow.setBackground(new java.awt.Color(146, 98, 144));
+        topbar_infoWindow.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topbar_infoWindowMouseDragged(evt);
+            }
+        });
+        topbar_infoWindow.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topbar_infoWindowMousePressed(evt);
+            }
+        });
+
+        close1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
+        close1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                close1MouseClicked(evt);
+            }
+        });
+
+        minimize1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimize.png"))); // NOI18N
+        minimize1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimize1MinimizeMouseClicked(evt);
+            }
+        });
+
+        infoWindow_lbl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        infoWindow_lbl.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout topbar_infoWindowLayout = new javax.swing.GroupLayout(topbar_infoWindow);
+        topbar_infoWindow.setLayout(topbar_infoWindowLayout);
+        topbar_infoWindowLayout.setHorizontalGroup(
+            topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topbar_infoWindowLayout.createSequentialGroup()
+                .addComponent(infoWindow_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(minimize1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(close1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        topbar_infoWindowLayout.setVerticalGroup(
+            topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(close1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(minimize1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(infoWindow_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(info_textPane);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(51, 255, 0));
+        jLabel20.setText("Corregido");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel21.setText("Correcto");
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel22.setText("Error no corregible");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21))
+                .addGap(30, 30, 30))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout infoWindowLayout = new javax.swing.GroupLayout(infoWindow.getContentPane());
+        infoWindow.getContentPane().setLayout(infoWindowLayout);
+        infoWindowLayout.setHorizontalGroup(
+            infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoWindowLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(topbar_infoWindow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        infoWindowLayout.setVerticalGroup(
+            infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(infoWindowLayout.createSequentialGroup()
+                .addComponent(topbar_infoWindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -588,7 +709,7 @@ public class Inicio extends javax.swing.JFrame {
         detection_panel.setPreferredSize(new java.awt.Dimension(334, 514));
         detection_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        inferior_detection_pnl.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setText("Enviar:");
 
@@ -766,26 +887,26 @@ public class Inicio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout inferior_detection_pnlLayout = new javax.swing.GroupLayout(inferior_detection_pnl);
+        inferior_detection_pnl.setLayout(inferior_detection_pnlLayout);
+        inferior_detection_pnlLayout.setHorizontalGroup(
+            inferior_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inferior_detection_pnlLayout.createSequentialGroup()
+                .addGroup(inferior_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inferior_detection_pnlLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel4))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGroup(inferior_detection_pnlLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(inferior_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        inferior_detection_pnlLayout.setVerticalGroup(
+            inferior_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inferior_detection_pnlLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -796,32 +917,32 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jLabel4))
         );
 
-        detection_panel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 350, -1));
+        detection_panel.add(inferior_detection_pnl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 350, -1));
 
-        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        top_detection_pnl.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(146, 98, 144));
         jLabel23.setText("Detección de errores");
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout top_detection_pnlLayout = new javax.swing.GroupLayout(top_detection_pnl);
+        top_detection_pnl.setLayout(top_detection_pnlLayout);
+        top_detection_pnlLayout.setHorizontalGroup(
+            top_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(top_detection_pnlLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel23)
                 .addContainerGap(92, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        top_detection_pnlLayout.setVerticalGroup(
+            top_detection_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(top_detection_pnlLayout.createSequentialGroup()
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel23)
                 .addContainerGap())
         );
 
-        detection_panel.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 60));
+        detection_panel.add(top_detection_pnl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 60));
 
         central_panel.add(detection_panel);
         detection_panel.setBounds(0, 0, 334, 514);
@@ -962,9 +1083,9 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_1MousePressed
-        setColor(btn_1); 
+        setColor(btn_1);
         ind_1.setOpaque(true);
-        resetColor(new JPanel[]{btn_2,btn_3}, new JPanel[]{ind_2, ind_3});
+        resetColor(new JPanel[]{btn_2, btn_3}, new JPanel[]{ind_2, ind_3});
         upload_panel.setVisible(true);
         detection_panel.setVisible(false);
         correction_panel.setVisible(false);
@@ -975,9 +1096,9 @@ public class Inicio extends javax.swing.JFrame {
             pathFileCharged1.setText(sourceFile.getName());
             validate();
         }
-        setColor(btn_2); 
+        setColor(btn_2);
         ind_2.setOpaque(true);
-        resetColor(new JPanel[]{btn_1,btn_3}, new JPanel[]{ind_1, ind_3});
+        resetColor(new JPanel[]{btn_1, btn_3}, new JPanel[]{ind_1, ind_3});
         upload_panel.setVisible(false);
         detection_panel.setVisible(true);
         correction_panel.setVisible(false);
@@ -988,17 +1109,17 @@ public class Inicio extends javax.swing.JFrame {
             pathFileCharged.setText(sourceFile.getName());
             validate();
         }
-        setColor(btn_3); 
+        setColor(btn_3);
         ind_3.setOpaque(true);
-        resetColor(new JPanel[]{btn_1,btn_2}, new JPanel[]{ind_1, ind_2});
+        resetColor(new JPanel[]{btn_1, btn_2}, new JPanel[]{ind_1, ind_2});
         upload_panel.setVisible(false);
         detection_panel.setVisible(false);
         correction_panel.setVisible(true);
     }//GEN-LAST:event_btn_3MousePressed
 
     private void top_barMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_top_barMousePressed
-       x = evt.getX();
-       y = evt.getY();
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_top_barMousePressed
 
     private void top_barMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_top_barMouseDragged
@@ -1016,8 +1137,11 @@ public class Inicio extends javax.swing.JFrame {
     private void generate_detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generate_detection_btnActionPerformed
         if (!valido) {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
-        } else{
-            GenerateCode(sourceFile, -1, this, 0);
+        } else {
+            GenerateCode(sourceFile, -1, this, 0, info_textPane);
+            iniciarInfoWindow();
+            infoWindow_lbl.setText("Codificación Bit de Paridad");
+            validate();
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
 
@@ -1032,19 +1156,22 @@ public class Inicio extends javax.swing.JFrame {
     private void detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detection_btnActionPerformed
         if (namebtp.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             DetectParityTxt(sourceFile, this, namebtp);
+            //iniciarInfoWindow();
         }
     }//GEN-LAST:event_detection_btnActionPerformed
 
     private void send_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_send_correction_btnActionPerformed
-       if (!valido) {
+        if (!valido) {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
-        } else{
-           GenerateCode(sourceFile, Integer.parseInt((String) jComboBox1.getSelectedItem()), this, 1);
-//            GenerateHammingCodeTxt(sourceFile,Integer.parseInt((String) jComboBox1.getSelectedItem()),this);
+        } else {
+            GenerateCode(sourceFile, Integer.parseInt((String) jComboBox1.getSelectedItem()), this, 1, info_textPane);
+            iniciarInfoWindow();
+            infoWindow_lbl.setText("Codificación Hamming");
+            validate();
         }
-        
+
     }//GEN-LAST:event_send_correction_btnActionPerformed
 
     private void bits_ruido_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bits_ruido_fieldKeyTyped
@@ -1066,30 +1193,33 @@ public class Inicio extends javax.swing.JFrame {
     private void transmit_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmit_correction_btnActionPerformed
         if (sourceHam.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            //
+        } else {
+            //iniciarInfoWindow();
         }
     }//GEN-LAST:event_transmit_correction_btnActionPerformed
 
     private void receive_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receive_correction_btnActionPerformed
         if (hamFile.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            CorrectHammingTxt(sourceFile, this, hamFile);
+        } else {
+            CorrectHammingTxt(sourceFile, this, hamFile.getText(), info_textPane);
+            iniciarInfoWindow();
+            infoWindow_lbl.setText("Archivo .ham corregido");
+            validate();
         }
     }//GEN-LAST:event_receive_correction_btnActionPerformed
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
-        valido=ValidFile(sourceFile, this);
+        valido = ValidFile(sourceFile, this);
     }//GEN-LAST:event_validateFileActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fc.showOpenDialog(jPanel3);
-        try{
+        try {
             sourceFile = fc.getSelectedFile();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jPanel3MouseClicked
@@ -1123,23 +1253,42 @@ public class Inicio extends javax.swing.JFrame {
 
     private void nRandKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyPressed
 
-        if((!Character.isDigit(evt.getKeyChar())) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_DELETE)){
+        if ((!Character.isDigit(evt.getKeyChar())) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_DELETE)) {
             evt.consume();
         }
     }//GEN-LAST:event_nRandKeyPressed
 
-    
-    
+    private void topbar_infoWindowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topbar_infoWindowMousePressed
+        x = evt.getX();
+        y = evt.getY();
+    }//GEN-LAST:event_topbar_infoWindowMousePressed
+
+    private void topbar_infoWindowMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topbar_infoWindowMouseDragged
+        infoWindow.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
+    }//GEN-LAST:event_topbar_infoWindowMouseDragged
+
+    private void minimize1MinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimize1MinimizeMouseClicked
+        infoWindow.setState(1);
+    }//GEN-LAST:event_minimize1MinimizeMouseClicked
+
+    private void close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseClicked
+        infoWindow.dispose();
+    }//GEN-LAST:event_close1MouseClicked
+
+    private void iniciarInfoWindow() {
+        infoWindow.setVisible(true);
+        infoWindow.setSize(614, 579);
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
 
-        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-        */
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -1157,32 +1306,30 @@ public class Inicio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-        
+
             public void run() {
                 new Inicio().setVisible(true);
             }
         });
-        
+
         //</editor-fold>
     }
-    
-    private void setColor(JPanel pane)
-    {
-        pane.setBackground(new Color(23,35,51));
+
+    private void setColor(JPanel pane) {
+        pane.setBackground(new Color(23, 35, 51));
     }
-    
-    private void resetColor(JPanel [] pane, JPanel [] indicators)
-    {
+
+    private void resetColor(JPanel[] pane, JPanel[] indicators) {
         for (JPanel pane1 : pane) {
-            pane1.setBackground(new Color(13,8,24));
+            pane1.setBackground(new Color(13, 8, 24));
         }
         for (JPanel indicator : indicators) {
-            indicator.setOpaque(false);           
+            indicator.setOpaque(false);
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1193,6 +1340,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextField btpsource;
     private javax.swing.JPanel central_panel;
     private javax.swing.JLabel close;
+    private javax.swing.JLabel close1;
     private javax.swing.JPanel correction_panel;
     private java.awt.Button detection_btn;
     private javax.swing.JPanel detection_panel;
@@ -1203,6 +1351,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel ind_2;
     private javax.swing.JPanel ind_3;
     private javax.swing.JPanel inferior_correction_pnl;
+    private javax.swing.JPanel inferior_detection_pnl;
+    private javax.swing.JFrame infoWindow;
+    private javax.swing.JLabel infoWindow_lbl;
+    public javax.swing.JTextPane info_textPane;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1216,6 +1368,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
@@ -1226,17 +1381,18 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_1;
     private javax.swing.JLabel lbl_2;
     private javax.swing.JLabel lbl_3;
     private javax.swing.JLabel minimize;
+    private javax.swing.JLabel minimize1;
     private java.awt.Button modify_detection_btn;
     private javax.swing.JTextField nRand;
     private javax.swing.JTextField namebtp;
@@ -1249,6 +1405,8 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextField sourceHam;
     private javax.swing.JPanel top_bar;
     private javax.swing.JPanel top_correction_pnl;
+    private javax.swing.JPanel top_detection_pnl;
+    private javax.swing.JPanel topbar_infoWindow;
     private javax.swing.JPanel transmision_correction_panel;
     private java.awt.Button transmit_correction_btn;
     private javax.swing.JPanel upload_panel;

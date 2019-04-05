@@ -31,7 +31,6 @@ public class HammingCode {
             }
             this.dataword = getDataword();
 //            this.correct = VerificarHamming(word);
-            System.out.println("El síndrome es: "+SindromeHamming(word));
             this.error = getDecimal(SindromeHamming(word));
         }
 
