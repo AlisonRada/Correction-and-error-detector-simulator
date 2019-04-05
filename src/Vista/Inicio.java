@@ -1,16 +1,12 @@
 package Vista;
 
-import Controlador.Main;
 import static Controlador.Main.*;
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 /**
@@ -213,27 +209,28 @@ public class Inicio extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(info2)
-                .addGap(91, 91, 91))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(info3)
-                    .addComponent(info1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(info1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(info2)
+                        .addGap(91, 91, 91))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(info3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(info3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(info1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(info2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(info2)
+                    .addComponent(info1))
+                .addContainerGap(480, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout infoWindowLayout = new javax.swing.GroupLayout(infoWindow.getContentPane());
@@ -1185,7 +1182,9 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             GenerateCode(sourceFile, -1, this, 0, info_textPane);
-            if(!infopen) iniciarInfoWindow();
+            if (!infopen) {
+                iniciarInfoWindow();
+            }
             info1.setText("");
             info2.setText("");
             info3.setText("");
@@ -1197,13 +1196,18 @@ public class Inicio extends javax.swing.JFrame {
     private void modify_detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modify_detection_btnActionPerformed
         if (btpsource.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            errorRandom(this, nRand, btpsource, true, info_textPane);
-            info1.setText("");
-            info2.setText("");
-            info3.setText("Bits dañados");
-            infoWindow_lbl.setText("Generacion de Ruido");
-            if(!infopen) iniciarInfoWindow();
+        } else {
+            boolean abrir = errorRandom(this, nRand, btpsource, true, info_textPane); //True si es btp
+            if (abrir) {
+                info1.setText("");
+                info2.setText("");
+                info3.setText("Bits dañados");
+                infoWindow_lbl.setText("Generacion de Ruido");
+                if (!infopen) {
+                    iniciarInfoWindow();
+                }
+            }
+
         }
     }//GEN-LAST:event_modify_detection_btnActionPerformed
 
@@ -1216,7 +1220,9 @@ public class Inicio extends javax.swing.JFrame {
             info2.setText("");
             info3.setText("");
             infoWindow_lbl.setText("Mensaje Recibido Bit de Paridad");
-            if(!infopen) iniciarInfoWindow();
+            if (!infopen) {
+                iniciarInfoWindow();
+            }
         }
     }//GEN-LAST:event_detection_btnActionPerformed
 
@@ -1229,7 +1235,9 @@ public class Inicio extends javax.swing.JFrame {
             info2.setText("");
             info3.setText("");
             infoWindow_lbl.setText("Codificación Hamming");
-            if(!infopen) iniciarInfoWindow();
+            if (!infopen) {
+                iniciarInfoWindow();
+            }
             validate();
         }
 
@@ -1244,13 +1252,18 @@ public class Inicio extends javax.swing.JFrame {
     private void transmit_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmit_correction_btnActionPerformed
         if (sourceHam.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            errorRandom(this, bits_ruido_field, sourceHam, false, info_textPane);
-            info1.setText("");
-            info2.setText("");
-            info3.setText("Bits dañados");
-            infoWindow_lbl.setText("Generacion de Ruido");
-            if(!infopen) iniciarInfoWindow();
+        } else {
+            boolean abrir = errorRandom(this, bits_ruido_field, sourceHam, false, info_textPane);
+            if (abrir) {
+                info1.setText("");
+                info2.setText("");
+                info3.setText("Bits dañados");
+                infoWindow_lbl.setText("Generacion de Ruido");
+                validate();
+                if (!infopen) {
+                    iniciarInfoWindow();
+                }
+            }
         }
     }//GEN-LAST:event_transmit_correction_btnActionPerformed
 
@@ -1259,7 +1272,9 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             CorrectHammingTxt(sourceFile, this, hamFile.getText(), info_textPane);
-            if(!infopen) iniciarInfoWindow();
+            if (!infopen) {
+                iniciarInfoWindow();
+            }
             info1.setText("Corregidos");
             info2.setText("Correctos");
             info3.setText("Dañados");
@@ -1270,7 +1285,9 @@ public class Inicio extends javax.swing.JFrame {
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
         valido = ValidFile(sourceFile, this);
-        if(valido) jLabel11.setIcon(new ImageIcon("src/Imagenes/checked.png"));
+        if (valido) {
+            jLabel11.setIcon(new ImageIcon("src/Imagenes/checked.png"));
+        }
     }//GEN-LAST:event_validateFileActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
@@ -1278,12 +1295,11 @@ public class Inicio extends javax.swing.JFrame {
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fc.showOpenDialog(jPanel3);
         try {
-            if(fc.getSelectedFile().getName().endsWith(".txt")){
+            if (fc.getSelectedFile().getName().endsWith(".txt")) {
                 sourceFile = fc.getSelectedFile();
                 jLabel8.setText(sourceFile.getName());
                 jLabel11.setIcon(new ImageIcon("src/Imagenes/document.png"));
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Por favor cargue un archivo .txt", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
@@ -1314,15 +1330,15 @@ public class Inicio extends javax.swing.JFrame {
 
     private void close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseClicked
         infoWindow.dispose();
-        infopen=false;
+        infopen = false;
     }//GEN-LAST:event_close1MouseClicked
 
     private void jPanel3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusGained
-        
+
     }//GEN-LAST:event_jPanel3FocusGained
 
     private void jPanel3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusLost
-        
+
     }//GEN-LAST:event_jPanel3FocusLost
 
     private void jPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseEntered
@@ -1330,12 +1346,12 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel3MouseEntered
 
     private void jPanel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseExited
-        jPanel3.setBackground(new Color(222,222,222));
+        jPanel3.setBackground(new Color(222, 222, 222));
     }//GEN-LAST:event_jPanel3MouseExited
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        sourceFile=null;
-        valido=false;
+        sourceFile = null;
+        valido = false;
         pathFileCharged.setText("No ha cargado un archivo");
         pathFileCharged1.setText("No ha cargado un archivo");
         jLabel11.setIcon(new ImageIcon("src/Imagenes/upload_48px_1.png"));
@@ -1359,8 +1375,8 @@ public class Inicio extends javax.swing.JFrame {
     private void iniciarInfoWindow() {
         infoWindow.setVisible(true);
         infoWindow.setSize(614, 579);
-        infoWindow.setLocation(1187,230);
-        infopen=true;
+        infoWindow.setLocation(1187, 230);
+        infopen = true;
     }
 
     /**
@@ -1400,8 +1416,7 @@ public class Inicio extends javax.swing.JFrame {
 
         //</editor-fold>
     }
-    
-    
+
     private void setColor(JPanel pane) {
         pane.setBackground(new Color(23, 35, 51));
     }

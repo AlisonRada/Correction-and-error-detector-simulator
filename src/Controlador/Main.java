@@ -390,16 +390,18 @@ public class Main {
         }
     }
 
-    public static void errorRandom(Component w, JTextField nrand, JTextField namebtp, boolean btp, JTextPane textPane) {
+    public static boolean errorRandom(Component w, JTextField nrand, JTextField namebtp, boolean btp, JTextPane textPane) {
         textPane.setText("");
+        String extension;
+        if (btp) {
+            extension = ".btp";
+        }else{
+            extension = ".ham";
+        }
         File dir = new File("resources/");
         File[] matches;
-        if (btp) {
-            matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".btp"));
-        }else{
-            matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".ham"));
-        }
-        
+        matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + extension));
+        boolean correcto = false;
         if (matches.length != 0) {
             File mfile = matches[0];
             try {
@@ -471,7 +473,8 @@ public class Main {
                     }
                     bw.close();
                     fw.close();
-                    JOptionPane.showMessageDialog(w, "Archivo .btp modificado", "Generado", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(w, "Archivo "+extension+" modificado", "Generado", JOptionPane.INFORMATION_MESSAGE);
+                    correcto = true;
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(w, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -483,6 +486,7 @@ public class Main {
         } else {
             JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        return correcto;
     }
 
     public static String decimalToBinary(int n) {
