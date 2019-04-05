@@ -1,5 +1,6 @@
 package Vista;
 
+import Controlador.Main;
 import static Controlador.Main.*;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -26,6 +27,7 @@ public class Inicio extends javax.swing.JFrame {
     File sourceFile;
     File btpFile = new File("resources");
     boolean valido;
+    boolean infopen = false;
 
     public Inicio() {
         initComponents();
@@ -61,12 +63,13 @@ public class Inicio extends javax.swing.JFrame {
         topbar_infoWindow = new javax.swing.JPanel();
         close1 = new javax.swing.JLabel();
         minimize1 = new javax.swing.JLabel();
+        infoWindow_lbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         info_textPane = new javax.swing.JTextPane();
         jPanel5 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        info1 = new javax.swing.JLabel();
+        info2 = new javax.swing.JLabel();
+        info3 = new javax.swing.JLabel();
         side_panel = new javax.swing.JPanel();
         btn_1 = new javax.swing.JPanel();
         ind_1 = new javax.swing.JPanel();
@@ -136,10 +139,8 @@ public class Inicio extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         infoWindow.setLocationByPlatform(true);
-        infoWindow.setMaximumSize(new java.awt.Dimension(614, 579));
         infoWindow.setMinimumSize(new java.awt.Dimension(614, 579));
         infoWindow.setUndecorated(true);
-        infoWindow.setPreferredSize(new java.awt.Dimension(614, 579));
         infoWindow.setResizable(false);
 
         topbar_infoWindow.setBackground(new java.awt.Color(146, 98, 144));
@@ -168,36 +169,45 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        infoWindow_lbl.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        infoWindow_lbl.setForeground(new java.awt.Color(240, 240, 240));
+
         javax.swing.GroupLayout topbar_infoWindowLayout = new javax.swing.GroupLayout(topbar_infoWindow);
         topbar_infoWindow.setLayout(topbar_infoWindowLayout);
         topbar_infoWindowLayout.setHorizontalGroup(
             topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topbar_infoWindowLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(infoWindow_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(minimize1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(close1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         topbar_infoWindowLayout.setVerticalGroup(
             topbar_infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(close1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(close1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(minimize1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(topbar_infoWindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(infoWindow_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jScrollPane1.setViewportView(info_textPane);
 
         jPanel5.setBackground(new java.awt.Color(238, 238, 238));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(51, 255, 0));
-        jLabel20.setText("Corregido");
+        info1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        info1.setForeground(new java.awt.Color(0, 153, 0));
+        info1.setText("Corregido");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel21.setText("Correcto");
+        info2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        info2.setText("Correcto");
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel22.setText("Error no corregible");
+        info3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        info3.setForeground(new java.awt.Color(204, 0, 0));
+        info3.setText("Error no corregible");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -205,21 +215,24 @@ public class Inicio extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(info2)
+                .addGap(91, 91, 91))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22)
-                    .addComponent(jLabel20)
-                    .addComponent(jLabel21))
-                .addGap(30, 30, 30))
+                    .addComponent(info3)
+                    .addComponent(info1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jLabel21)
+                .addContainerGap()
+                .addComponent(info3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20)
+                .addComponent(info1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22)
+                .addComponent(info2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -239,7 +252,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(topbar_infoWindow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addGroup(infoWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -255,6 +268,7 @@ public class Inicio extends javax.swing.JFrame {
         side_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_1.setBackground(new java.awt.Color(13, 8, 24));
+        btn_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_1.setPreferredSize(new java.awt.Dimension(120, 43));
         btn_1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -277,7 +291,7 @@ public class Inicio extends javax.swing.JFrame {
 
         lbl_1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lbl_1.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_1.setText("Home");
+        lbl_1.setText("Cargar Archivo");
 
         javax.swing.GroupLayout btn_1Layout = new javax.swing.GroupLayout(btn_1);
         btn_1.setLayout(btn_1Layout);
@@ -285,9 +299,9 @@ public class Inicio extends javax.swing.JFrame {
             btn_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_1Layout.createSequentialGroup()
                 .addComponent(ind_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_1)
-                .addGap(0, 49, Short.MAX_VALUE))
+                .addGap(0, 20, Short.MAX_VALUE))
         );
         btn_1Layout.setVerticalGroup(
             btn_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,6 +317,7 @@ public class Inicio extends javax.swing.JFrame {
         btn_1.getAccessibleContext().setAccessibleName("");
 
         btn_2.setBackground(new java.awt.Color(13, 8, 24));
+        btn_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_2.setPreferredSize(new java.awt.Dimension(120, 43));
         btn_2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -325,7 +340,7 @@ public class Inicio extends javax.swing.JFrame {
 
         lbl_2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lbl_2.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_2.setText("Detection");
+        lbl_2.setText("Detección");
 
         javax.swing.GroupLayout btn_2Layout = new javax.swing.GroupLayout(btn_2);
         btn_2.setLayout(btn_2Layout);
@@ -333,7 +348,7 @@ public class Inicio extends javax.swing.JFrame {
             btn_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_2Layout.createSequentialGroup()
                 .addComponent(ind_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(lbl_2)
                 .addGap(32, 32, 32))
         );
@@ -348,6 +363,7 @@ public class Inicio extends javax.swing.JFrame {
         side_panel.add(btn_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 120, 40));
 
         btn_3.setBackground(new java.awt.Color(13, 8, 24));
+        btn_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_3.setPreferredSize(new java.awt.Dimension(120, 43));
         btn_3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -370,7 +386,7 @@ public class Inicio extends javax.swing.JFrame {
 
         lbl_3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         lbl_3.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_3.setText("Correction");
+        lbl_3.setText("Corrección");
 
         javax.swing.GroupLayout btn_3Layout = new javax.swing.GroupLayout(btn_3);
         btn_3.setLayout(btn_3Layout);
@@ -378,7 +394,7 @@ public class Inicio extends javax.swing.JFrame {
             btn_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_3Layout.createSequentialGroup()
                 .addComponent(ind_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(lbl_3)
                 .addGap(29, 29, 29))
         );
@@ -410,6 +426,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel.png"))); // NOI18N
+        close.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         close.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 closeMouseClicked(evt);
@@ -417,6 +434,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         minimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/minimize.png"))); // NOI18N
+        minimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         minimize.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 MinimizeMouseClicked(evt);
@@ -472,8 +490,9 @@ public class Inicio extends javax.swing.JFrame {
         jLabel2.setText("Longitud de ASCII");
 
         send_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        send_correction_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         send_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
-        send_correction_btn.setLabel("Send");
+        send_correction_btn.setLabel("Enviar");
         send_correction_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 send_correction_btnActionPerformed(evt);
@@ -481,12 +500,15 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2" }));
+        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Archivo:");
 
         jLabel12.setForeground(new java.awt.Color(146, 98, 144));
         jLabel12.setText("Nombre del archivo cargado en memoria");
+
+        pathFileCharged.setText("No ha cargado un archivo");
 
         javax.swing.GroupLayout envio_correction_panelLayout = new javax.swing.GroupLayout(envio_correction_panel);
         envio_correction_panel.setLayout(envio_correction_panelLayout);
@@ -539,6 +561,11 @@ public class Inicio extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Número de bits a cambiar:");
 
+        bits_ruido_field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bits_ruido_fieldActionPerformed(evt);
+            }
+        });
         bits_ruido_field.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 bits_ruido_fieldKeyTyped(evt);
@@ -546,6 +573,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         transmit_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        transmit_correction_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         transmit_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
         transmit_correction_btn.setLabel("Transmit");
         transmit_correction_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -571,11 +599,10 @@ public class Inicio extends javax.swing.JFrame {
                         .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel17))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sourceHam)
-                            .addComponent(bits_ruido_field, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                        .addGap(0, 20, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bits_ruido_field, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sourceHam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         transmision_correction_panelLayout.setVerticalGroup(
@@ -599,6 +626,7 @@ public class Inicio extends javax.swing.JFrame {
         recepcion_correction_panel.setForeground(new java.awt.Color(146, 98, 144));
 
         receive_correction_btn.setBackground(new java.awt.Color(146, 98, 144));
+        receive_correction_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         receive_correction_btn.setForeground(new java.awt.Color(255, 255, 255));
         receive_correction_btn.setLabel("Receive");
         receive_correction_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -657,7 +685,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(envio_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(transmision_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(recepcion_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         inferior_correction_pnlLayout.setVerticalGroup(
             inferior_correction_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,6 +747,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel3.setText("Generar palabras de códigos");
 
         generate_detection_btn.setBackground(new java.awt.Color(146, 98, 144));
+        generate_detection_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         generate_detection_btn.setForeground(new java.awt.Color(255, 255, 255));
         generate_detection_btn.setLabel("Generar");
         generate_detection_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -726,6 +755,8 @@ public class Inicio extends javax.swing.JFrame {
                 generate_detection_btnActionPerformed(evt);
             }
         });
+
+        pathFileCharged1.setText("No ha cargado un archivo");
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel18.setText("Archivo:");
@@ -773,6 +804,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transmisión y propagación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(146, 98, 144))); // NOI18N
 
         modify_detection_btn.setBackground(new java.awt.Color(146, 98, 144));
+        modify_detection_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         modify_detection_btn.setForeground(new java.awt.Color(255, 255, 255));
         modify_detection_btn.setLabel("Modificar bits");
         modify_detection_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -792,9 +824,6 @@ public class Inicio extends javax.swing.JFrame {
         nRand.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 nRandKeyTyped(evt);
-            }
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                nRandKeyPressed(evt);
             }
         });
 
@@ -848,6 +877,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recepción", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(146, 98, 144))); // NOI18N
 
         detection_btn.setBackground(new java.awt.Color(146, 98, 144));
+        detection_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         detection_btn.setForeground(new java.awt.Color(255, 255, 255));
         detection_btn.setLabel("Detectar");
         detection_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -952,20 +982,36 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel3.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanel3MouseDragged(evt);
+            }
+        });
+        jPanel3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPanel3FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPanel3FocusLost(evt);
             }
         });
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel3MouseExited(evt);
+            }
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(146, 98, 144));
-        jLabel8.setText("Drop Files to upload");
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Click para cargar archivo");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(146, 98, 144));
@@ -975,28 +1021,26 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(132, Short.MAX_VALUE)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabel8)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addGap(128, 128, 128))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
-                .addGap(78, 78, 78))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         validateFile.setBackground(new java.awt.Color(146, 98, 144));
+        validateFile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         validateFile.setForeground(new java.awt.Color(255, 255, 255));
-        validateFile.setLabel("Upload File");
+        validateFile.setLabel("Cargar Archivo");
         validateFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 validateFileActionPerformed(evt);
@@ -1004,35 +1048,38 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("Cancel");
+        jLabel10.setText("Cancelar");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addGap(8, 8, 8)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addComponent(jLabel10)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(validateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -1046,16 +1093,16 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel9)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout upload_panelLayout = new javax.swing.GroupLayout(upload_panel);
@@ -1069,8 +1116,8 @@ public class Inicio extends javax.swing.JFrame {
             upload_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, upload_panelLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         central_panel.add(upload_panel);
@@ -1138,8 +1185,11 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             GenerateCode(sourceFile, -1, this, 0, info_textPane);
-            iniciarInfoWindow();
-//            infoWindow_lbl.setText("Codificación Bit de Paridad");
+            if(!infopen) iniciarInfoWindow();
+            info1.setText("");
+            info2.setText("");
+            info3.setText("");
+            infoWindow_lbl.setText("Codificación Bit de Paridad");
             validate();
         }
     }//GEN-LAST:event_generate_detection_btnActionPerformed
@@ -1148,7 +1198,12 @@ public class Inicio extends javax.swing.JFrame {
         if (btpsource.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            errorRandom(this, nRand, btpsource, true);
+            errorRandom(this, nRand, btpsource, true, info_textPane);
+            info1.setText("");
+            info2.setText("");
+            info3.setText("Bits dañados");
+            infoWindow_lbl.setText("Generacion de Ruido");
+            if(!infopen) iniciarInfoWindow();
         }
     }//GEN-LAST:event_modify_detection_btnActionPerformed
 
@@ -1156,8 +1211,12 @@ public class Inicio extends javax.swing.JFrame {
         if (namebtp.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            DetectParityTxt(sourceFile, this, namebtp);
-            //iniciarInfoWindow();
+            DetectParityTxt(sourceFile, this, namebtp, info_textPane);
+            info1.setText("");
+            info2.setText("");
+            info3.setText("");
+            infoWindow_lbl.setText("Mensaje Recibido Bit de Paridad");
+            if(!infopen) iniciarInfoWindow();
         }
     }//GEN-LAST:event_detection_btnActionPerformed
 
@@ -1166,34 +1225,32 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             GenerateCode(sourceFile, Integer.parseInt((String) jComboBox1.getSelectedItem()), this, 1, info_textPane);
-            iniciarInfoWindow();
-//            infoWindow_lbl.setText("Codificación Hamming");
+            info1.setText("");
+            info2.setText("");
+            info3.setText("");
+            infoWindow_lbl.setText("Codificación Hamming");
+            if(!infopen) iniciarInfoWindow();
             validate();
         }
 
     }//GEN-LAST:event_send_correction_btnActionPerformed
 
     private void bits_ruido_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bits_ruido_fieldKeyTyped
-        JTextField text = (JTextField) evt.getSource();
-        text.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char caracter = e.getKeyChar();
-                // Verificar si la tecla pulsada no es un digito
-                if (((caracter < '0')
-                        || (caracter > '9'))
-                        && (caracter != '\b' /*corresponde a BACK_SPACE*/)) {
-                    e.consume();  // Ignorar el evento de teclado
-                }
-            }
-        });
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
     }//GEN-LAST:event_bits_ruido_fieldKeyTyped
 
     private void transmit_correction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transmit_correction_btnActionPerformed
         if (sourceHam.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            //iniciarInfoWindow();
+        }else{
+            errorRandom(this, bits_ruido_field, sourceHam, false, info_textPane);
+            info1.setText("");
+            info2.setText("");
+            info3.setText("Bits dañados");
+            infoWindow_lbl.setText("Generacion de Ruido");
+            if(!infopen) iniciarInfoWindow();
         }
     }//GEN-LAST:event_transmit_correction_btnActionPerformed
 
@@ -1202,14 +1259,18 @@ public class Inicio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .ham", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             CorrectHammingTxt(sourceFile, this, hamFile.getText(), info_textPane);
-            iniciarInfoWindow();
-//            infoWindow_lbl.setText("Archivo .ham corregido");
+            if(!infopen) iniciarInfoWindow();
+            info1.setText("Corregidos");
+            info2.setText("Correctos");
+            info3.setText("Dañados");
+            infoWindow_lbl.setText("Archivo .ham corregido");
             validate();
         }
     }//GEN-LAST:event_receive_correction_btnActionPerformed
 
     private void validateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateFileActionPerformed
         valido = ValidFile(sourceFile, this);
+        if(valido) jLabel11.setIcon(new ImageIcon("src/Imagenes/checked.png"));
     }//GEN-LAST:event_validateFileActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
@@ -1217,9 +1278,16 @@ public class Inicio extends javax.swing.JFrame {
         fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
         fc.showOpenDialog(jPanel3);
         try {
-            sourceFile = fc.getSelectedFile();
+            if(fc.getSelectedFile().getName().endsWith(".txt")){
+                sourceFile = fc.getSelectedFile();
+                jLabel8.setText(sourceFile.getName());
+                jLabel11.setIcon(new ImageIcon("src/Imagenes/document.png"));
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Por favor cargue un archivo .txt", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, "Por favor cargue un archivo valido", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jPanel3MouseClicked
 
@@ -1227,35 +1295,9 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setBackground(Color.lightGray);
     }//GEN-LAST:event_jPanel3MouseDragged
 
-    private void nRandKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyTyped
-        JTextField text = (JTextField) evt.getSource();
-        text.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char caracter = e.getKeyChar();
-                // Verificar si la tecla pulsada no es un digito
-                if (((caracter < '0')
-                        || (caracter > '9'))
-                        && (caracter != '\b' /*corresponde a BACK_SPACE*/)) {
-                    e.consume();  // Ignorar el evento de teclado
-                }
-            }
-        });
-    }//GEN-LAST:event_nRandKeyTyped
-
     private void btpsourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btpsourceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btpsourceActionPerformed
-
-    private void nRandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nRandActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nRandActionPerformed
-
-    private void nRandKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyPressed
-
-        if ((!Character.isDigit(evt.getKeyChar())) || (evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) || (evt.getKeyChar() == KeyEvent.VK_DELETE)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_nRandKeyPressed
 
     private void topbar_infoWindowMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topbar_infoWindowMousePressed
         x = evt.getX();
@@ -1272,12 +1314,53 @@ public class Inicio extends javax.swing.JFrame {
 
     private void close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close1MouseClicked
         infoWindow.dispose();
+        infopen=false;
     }//GEN-LAST:event_close1MouseClicked
+
+    private void jPanel3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusGained
+        
+    }//GEN-LAST:event_jPanel3FocusGained
+
+    private void jPanel3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel3FocusLost
+        
+    }//GEN-LAST:event_jPanel3FocusLost
+
+    private void jPanel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseEntered
+        jPanel3.setBackground(Color.LIGHT_GRAY);
+    }//GEN-LAST:event_jPanel3MouseEntered
+
+    private void jPanel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseExited
+        jPanel3.setBackground(new Color(222,222,222));
+    }//GEN-LAST:event_jPanel3MouseExited
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        sourceFile=null;
+        valido=false;
+        pathFileCharged.setText("No ha cargado un archivo");
+        pathFileCharged1.setText("No ha cargado un archivo");
+        jLabel11.setIcon(new ImageIcon("src/Imagenes/upload_48px_1.png"));
+        jLabel8.setText("Click para cargar archivo");
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void bits_ruido_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bits_ruido_fieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bits_ruido_fieldActionPerformed
+
+    private void nRandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nRandActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nRandActionPerformed
+
+    private void nRandKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nRandKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_nRandKeyTyped
 
     private void iniciarInfoWindow() {
         infoWindow.setVisible(true);
         infoWindow.setSize(614, 579);
-        infoWindow.setLocationRelativeTo(null);
+        infoWindow.setLocation(1187,230);
+        infopen=true;
     }
 
     /**
@@ -1317,7 +1400,8 @@ public class Inicio extends javax.swing.JFrame {
 
         //</editor-fold>
     }
-
+    
+    
     private void setColor(JPanel pane) {
         pane.setBackground(new Color(23, 35, 51));
     }
@@ -1352,7 +1436,11 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel ind_3;
     private javax.swing.JPanel inferior_correction_pnl;
     private javax.swing.JPanel inferior_detection_pnl;
+    private javax.swing.JLabel info1;
+    private javax.swing.JLabel info2;
+    private javax.swing.JLabel info3;
     private javax.swing.JFrame infoWindow;
+    private javax.swing.JLabel infoWindow_lbl;
     public javax.swing.JTextPane info_textPane;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -1367,9 +1455,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;

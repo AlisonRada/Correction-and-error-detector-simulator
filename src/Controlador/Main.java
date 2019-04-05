@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.HammingCode;
 import Modelo.Word;
 import Vista.Inicio;
+import Vista.Inicio.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -30,7 +31,6 @@ import javax.swing.text.StyleConstants;
  * @author Leonardo
  */
 public class Main {
-
     /**
      * @param args the command line arguments
      */
@@ -218,12 +218,15 @@ public class Main {
                 fw.close();
                 JOptionPane.showMessageDialog(w, "Archivo " + extension + " generado exitosamente", "Hecho", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
+                
                 JOptionPane.showMessageDialog(w, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (FileNotFoundException ex) {
+            
             JOptionPane.showMessageDialog(w, "El archivo se ha movido o eliminado", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ex) {
+            
             System.out.println(ex);
         } catch (NullPointerException ex) {
 
@@ -238,7 +241,8 @@ public class Main {
         }
     }
 
-    public static void DetectParityTxt(File sourceFile, Component w, JTextField namebtp) {
+    public static void DetectParityTxt(File sourceFile, Component w, JTextField namebtp, JTextPane textPane) {
+        textPane.setText("");
         File dir = new File("resources/");
         boolean correct = true;
         File[] matches = dir.listFiles(new FilenameFilter() {
@@ -266,15 +270,20 @@ public class Main {
                 } while (linea != null && correct);
 
                 if (!correct) {
+                    
                     JOptionPane.showMessageDialog(w, "Se han detectado errores en los datos", "Archivo dañado", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (Exception e) {
+                
                 JOptionPane.showMessageDialog(w, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
             if (correct) {
                 try {
+                    SimpleAttributeSet attrs = new SimpleAttributeSet();
+                    StyleConstants.setFontSize(attrs, 14);
+                    
                     String name = datawords.getName();
                     FileWriter fw = new FileWriter("resources/" + name.substring(0, name.length()) + ".txt");
                     BufferedWriter bw = new BufferedWriter(fw);
@@ -282,18 +291,22 @@ public class Main {
                     for (Word codeword : dataword) {
                         for (int i = 0; i < codeword.getDatawordLength(); i += 8) {
                             line = line.concat(binToString(codeword.getDataword().substring(i, i + 8)));
-                            System.out.println();
                         }
                     }
+                    textoNegrita(attrs, textPane, line);
+                    nuevaLinea(textPane);
                     bw.write(line);
                     bw.close();
                     fw.close();
+                    
                     JOptionPane.showMessageDialog(w, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
                 } catch (IOException e) {
+                    
                     JOptionPane.showMessageDialog(w, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
+            
             JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -310,7 +323,6 @@ public class Main {
         });
         if (matches.length != 0) {
             File datawords = matches[0];
-            System.out.println(datawords.getAbsolutePath());
             try {
                 FileReader fr = new FileReader(datawords);
                 BufferedReader reader = new BufferedReader(fr);
@@ -365,7 +377,7 @@ public class Main {
                     JOptionPane.showMessageDialog(w, "Se han corregido errores en los datos", "Archivo corregido", JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (plural) {
-                    JOptionPane.showMessageDialog(w, "Parece que por lo menos un código tiene más de un error, se ha corregido hasta donde se ha podido. Aquellos que no se pueden se ha reemplazado por ?", "Misión fallida", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(w, "Parece que por lo menos un código tiene más de un error, se ha\ncorregido hasta donde se ha podido.Aquellos que no se pueden se ha reemplazado por ?", "Misión fallida", JOptionPane.ERROR_MESSAGE);
                 }
                 JOptionPane.showMessageDialog(w, "Archivo .txt final generado", "Generado", JOptionPane.INFORMATION_MESSAGE);
 
@@ -378,7 +390,8 @@ public class Main {
         }
     }
 
-    public static void errorRandom(Component w, JTextField nrand, JTextField namebtp, boolean btp) {
+    public static void errorRandom(Component w, JTextField nrand, JTextField namebtp, boolean btp, JTextPane textPane) {
+        textPane.setText("");
         File dir = new File("resources/");
         File[] matches;
         if (btp) {
@@ -392,7 +405,9 @@ public class Main {
             try {
                 FileReader fr = new FileReader(mfile);
                 BufferedReader reader = new BufferedReader(fr);
-                int n = parseInt(nrand.getText());
+                int n;
+                if(!nrand.getText().equals("")) n = parseInt(nrand.getText());
+                else n=0;
                 int randomNum;
                 String l = reader.readLine();
                 ArrayList<String> modfile = new ArrayList<>();
@@ -408,11 +423,10 @@ public class Main {
                 boolean ended = false;
                 while (j<modfile.size() && !ended) { //Dos while anidados para iterar entre los caracteres del archivo
                     linea = modfile.get(j);
-                    System.out.println(j);
                     int i = 0;
                     while (i < linea.length() && n > 0) {
                         randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1); //0 es el minimo y 10 el maximo
-                        if (randomNum < 5 && changed[j][i] != 1) { //Como es la mitad del rango es 50% de probabilidad
+                        if (randomNum < 1 && changed[j][i] != 1) { //Como es la mitad del rango es 50% de probabilidad
                             char[] aux = linea.toCharArray();
                             aux[i] = negatebin(aux[i]);
                             linea = String.valueOf(aux);
@@ -440,11 +454,20 @@ public class Main {
                 }
                 
                 try {
+                    SimpleAttributeSet attrs = new SimpleAttributeSet();
+                    StyleConstants.setFontSize(attrs, 12);
                     FileWriter fw = new FileWriter(mfile);
                     BufferedWriter bw = new BufferedWriter(fw);
-                    for (String line : modfile) {
+                    String line;
+                    for (int i = 0; i<modfile.size() ; i++) {
+                        line=modfile.get(i);
+                        for (int k = 0; k<line.length() ; k++) {
+                            if(changed[i][k]==1) textoRojo(attrs, textPane, String.valueOf(line.charAt(k)));
+                            else textoNegrita(attrs, textPane, String.valueOf(line.charAt(k)));
+                        }
                         bw.write(line);
                         bw.newLine();
+                        nuevaLinea(textPane);
                     }
                     bw.close();
                     fw.close();
@@ -493,6 +516,7 @@ public class Main {
     }
 
     private static void textoRojo(SimpleAttributeSet attrs, JTextPane text, String string) {
+        StyleConstants.setBold(attrs, true);
         StyleConstants.setForeground(attrs, Color.red);
         try {
             text.getStyledDocument().insertString(
@@ -503,7 +527,8 @@ public class Main {
     }
 
     private static void textoVerde(SimpleAttributeSet attrs, JTextPane textPane, String string) {
-        StyleConstants.setForeground(attrs, Color.GREEN);
+        StyleConstants.setBold(attrs, true);
+        StyleConstants.setForeground(attrs, new Color(0,153,0));
         try {
             textPane.getStyledDocument().insertString(
                     textPane.getStyledDocument().getLength(), string, attrs);
@@ -515,11 +540,12 @@ public class Main {
     private static void nuevaLinea(JTextPane text) {
         try {
             text.getStyledDocument().insertString(
-                    text.getStyledDocument().getLength(),
-                    System.getProperty("line.separator"), null);
+                text.getStyledDocument().getLength(),
+                System.getProperty("line.separator"), null);
         } catch (BadLocationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+    
 }
