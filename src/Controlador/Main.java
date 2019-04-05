@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.HammingCode;
 import Modelo.Word;
 import Vista.Inicio;
+import java.awt.Color;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,12 +13,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -43,13 +49,13 @@ public class Main {
         while (aux * 8 <= bin.length()) {
             char letter = (char) Integer.parseInt(bin.substring(aux * 8 - 8, aux * 8), 2);
             int value = (int) letter;
-            if (value > 64 && value < 91 || value > 96 && value < 123
+            if (value > 64 && value < 91 || value > 96 && value < 123 || value == 32
                     || value == 58 && value == 59 || value == 44 || value == 46) { //Si es un carácter válido
                 word += letter;
-            } else{
+            } else {
                 word += "?";
             }
-            
+
             aux++;
         }
 
@@ -84,7 +90,7 @@ public class Main {
                         character = linea.charAt(j);
                         value = (int) character;
                         //Si es un carácter válido
-                        if (value > 64 && value < 91 || value > 96 && value < 123
+                        if (value > 64 && value < 91 || value > 96 && value < 123 || value == 32
                                 || value == 58 && value == 59 || value == 44 || value == 46) {
                             aux = decimalToBinary(value);
                             while (aux.length() < 8) {
@@ -134,7 +140,8 @@ public class Main {
      * @param extensionASCII nos indica la longitud de caracteres ASCII para el
      * dataword (en caso de ser escogido Hamming)
      */
-    public static void GenerateCode(File sourceFile, int extensionASCII, Component w, int tipo) {
+    public static void GenerateCode(File sourceFile, int extensionASCII, Component w, int tipo, JTextPane textPane) {
+        textPane.setText("");
         String extension;
         ArrayList<Word> palabras = new ArrayList<>();
         ArrayList<HammingCode> palabras1 = new ArrayList<>();
@@ -154,6 +161,10 @@ public class Main {
             String linea = reader.readLine(); // leemos la unica linea
             binary = "";
             int j = 0;
+
+            SimpleAttributeSet attrs = new SimpleAttributeSet();
+            StyleConstants.setFontSize(attrs, 12);
+
             while (j < linea.length()) {
                 character = linea.charAt(j);
                 value = (int) character;
@@ -166,13 +177,19 @@ public class Main {
                 if (tipo == 0) { //ParityBit
                     if (control >= 16 || j + 1 >= linea.length()) {
                         control = 0;
+                        Word word = new Word(binary, false);
                         palabras.add(new Word(binary, false));
+                        textoNegrita(attrs, textPane, word.getCodeword());
+                        nuevaLinea(textPane);
                         binary = "";
                     }
                 } else { //HammingCode
                     if (extensionASCII == control || j == linea.length() - 1) { //Si ya cumple la extensión de caracteres o si se encuentra en la última linea
                         control = 0;
-                        palabras1.add(new HammingCode(binary, true));
+                        HammingCode t = new HammingCode(binary,true);
+                        textoNegrita(attrs, textPane, t.getCodeword());
+                        nuevaLinea(textPane);
+                        palabras1.add(t);
                         binary = "";
                     }
                 }
@@ -282,13 +299,14 @@ public class Main {
         }
     }
 
-    public static void CorrectHammingTxt(File sourceFile, Component w, JTextField hamFile) {
+    public static void CorrectHammingTxt(File sourceFile, Component w, String hamFile, JTextPane textPane) {
+        textPane.setText("");
         File dir = new File("resources/");
         boolean correct = true;
         File[] matches = dir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
-                return (name.equals(hamFile.getText() + ".ham"));
+                return (name.equals(hamFile + ".ham"));
             }
         });
         if (matches.length != 0) {
@@ -308,27 +326,42 @@ public class Main {
                 boolean plural = false;
                 int cont = 1;
 
+                SimpleAttributeSet attrs = new SimpleAttributeSet();
+                StyleConstants.setFontSize(attrs, 14);
+                String caracter;
+
                 do {
-                    System.out.println("Voy a verificar el siguiente codeword el siguiente codeword: " + linea);
                     HammingCode codeword_temp = new HammingCode(linea, false);
-                    System.out.println("Mi error es: " + codeword_temp.getError());
                     if (codeword_temp.getError() != 0) { //Si hay error
-                        System.out.println("Encontré un error");
-                        if (codeword_temp.getError() < linea.length()) {
+                        if (codeword_temp.getError() <= linea.length()) { //Un error que puede corregir
+                            System.out.println("Hubo error, pero lo puedo corregir");
                             codeword_temp.CorregirCodeword();
-                            line = line.concat(binToString(codeword_temp.getDataword()));
-                        } else {
-                            System.out.println("Sindrome de " + cont + ": " + codeword_temp.SindromeHamming(codeword_temp.getCodeword()));
+                            caracter = binToString(codeword_temp.getDataword());
+                            int value = (int) caracter.charAt(0);
+                            if (value > 64 && value < 91 || value > 96 && value < 123 || value == 32
+                                    || value == 58 && value == 59 || value == 44 || value == 46) { //Si es un carácter válido
+                                textoVerde(attrs, textPane, caracter);
+                            } else { //No es un caracter válido
+                                textoRojo(attrs, textPane, "?");
+                            }
+                            line = line.concat(caracter);
+                        } else { //Un error que no puedo corregir
+                            System.out.println("Hubo error y no puedo corregir");
+                            textoRojo(attrs, textPane, "?");
                             line = line.concat("?");
                             plural = true;
                         }
                         correct = false;
                     } else {
-                        line = line.concat(binToString(codeword_temp.getDataword()));
+                        System.out.println("No hubo error");
+                        caracter = binToString(codeword_temp.getDataword());
+                        textoNegrita(attrs, textPane, caracter);
+                        line = line.concat(caracter);
                     }
 
                     cont++;
                     linea = reader.readLine();
+//                    nuevaLinea(textPane);
 
                 } while (linea != null);
 
@@ -427,5 +460,118 @@ public class Main {
         } else {
             return '0';
         }
+    }
+
+    /*MANEJO DEL JTEXTPANE*/
+    public static void showText(File sourceFile, JTextPane textPane) {
+        if (sourceFile == null) {
+            JOptionPane.showMessageDialog(textPane, "No ha seleccionado ningún archivo", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            FileReader f1 = null;
+            int value;
+            int control = 0;
+            String binary, aux;
+            try {
+                f1 = new FileReader(sourceFile);
+                BufferedReader reader = new BufferedReader(f1);
+                String linea = reader.readLine(); // leemos la unica linea
+
+                if (linea == null) {                 //Verificamos que no este vacia
+                    JOptionPane.showMessageDialog(textPane, "Por favor verifique que el archivo contiene texto", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    binary = "";
+                    int j;
+                    while (linea != null) {
+                        SimpleAttributeSet attrs = new SimpleAttributeSet();
+                        j = 0;
+                        do {
+                            value = (int) linea.charAt(j);
+                            if (value > 64 && value < 91 || value > 96 && value < 123 || value == 32
+                                    || value == 58 && value == 59 || value == 44 || value == 46) { //Si es un carácter válido
+                                textoNegrita(attrs, textPane, linea.substring(j, j + 1));
+                            } else {
+                                textoRojo(attrs, textPane, linea.substring(j, j + 1));
+                            }
+                            j++;
+                        } while (j < linea.length());
+                        nuevaLinea(textPane);
+                        linea = reader.readLine();
+                    }
+                }
+                reader.close();
+                JOptionPane.showMessageDialog(textPane, "Proceso exitoso", "Archivo cargado con éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(textPane, "El archivo se ha movido o eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IOException ex) {
+                System.out.println("Error inesperado");
+            } finally {
+                try {
+                    if (f1 != null) {
+                        f1.close();
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    //Método para texto en negrita
+    private static void textoNegrita(SimpleAttributeSet attrs, JTextPane text, String string) {
+
+        /*Para modificar el valor de estos atributos, nos ayuda la clase StyleConstants. 
+		Esta clase tiene muchos métodos para cambiar valores a una clase SimpleAttributeSet. 
+		En este caso concreto hemos usado setBold() para ponerlo en negrita.
+         */
+        StyleConstants.setBold(attrs, true);
+        StyleConstants.setForeground(attrs, Color.BLACK);
+
+        /*Obtenemos el StyledDocument, que es lo que el JTextPane tiene dentro y 
+		representa al texto que estamos viendo.
+		El StyledDocument tiene un método insert() que admite tres parámetros:
+			- Posición en la que se quiere insetar el texto dentro del documento.
+			- El texto
+			- Los atributos del texto.
+		Como queremos insertar al final, la posición es justo la longitud del texto,
+		esto se obtiene con el método getLength().
+         */
+        try {
+            text.getStyledDocument().insertString(
+                    text.getStyledDocument().getLength(), string, attrs);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private static void textoRojo(SimpleAttributeSet attrs, JTextPane text, String string) {
+        StyleConstants.setForeground(attrs, Color.red);
+        try {
+            text.getStyledDocument().insertString(
+                    text.getStyledDocument().getLength(), string, attrs);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static void textoVerde(SimpleAttributeSet attrs, JTextPane textPane, String string) {
+        StyleConstants.setForeground(attrs, Color.GREEN);
+        try {
+            textPane.getStyledDocument().insertString(
+                    textPane.getStyledDocument().getLength(), string, attrs);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static void nuevaLinea(JTextPane text) {
+        try {
+            text.getStyledDocument().insertString(
+                    text.getStyledDocument().getLength(),
+                    System.getProperty("line.separator"), null);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
