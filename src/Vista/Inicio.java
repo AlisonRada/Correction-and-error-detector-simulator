@@ -2,31 +2,16 @@
 package Vista;
 
 import static Controlador.Main.*;
-import Modelo.HammingCode;
-import Modelo.Word;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -450,7 +435,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel17.setText("Archivo .ham ");
+        jLabel17.setText("Nombre de archivo .ham ");
 
         javax.swing.GroupLayout transmision_correction_panelLayout = new javax.swing.GroupLayout(transmision_correction_panel);
         transmision_correction_panel.setLayout(transmision_correction_panelLayout);
@@ -464,14 +449,12 @@ public class Inicio extends javax.swing.JFrame {
                         .addComponent(transmit_correction_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(transmision_correction_panelLayout.createSequentialGroup()
                         .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(transmision_correction_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bits_ruido_field, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(transmision_correction_panelLayout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sourceHam, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(transmision_correction_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sourceHam)
+                            .addComponent(bits_ruido_field, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                         .addGap(0, 20, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -554,7 +537,7 @@ public class Inicio extends javax.swing.JFrame {
                     .addComponent(envio_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(transmision_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(recepcion_correction_panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         inferior_correction_pnlLayout.setVerticalGroup(
             inferior_correction_pnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1039,7 +1022,11 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_generate_detection_btnActionPerformed
 
     private void modify_detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modify_detection_btnActionPerformed
-        System.out.println("No sirvo");
+        if (btpsource.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese el nombre del archivo .btp", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+            errorRandom(this, nRand, btpsource, true);
+        }
     }//GEN-LAST:event_modify_detection_btnActionPerformed
 
     private void detection_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detection_btnActionPerformed
@@ -1063,6 +1050,7 @@ public class Inicio extends javax.swing.JFrame {
     private void bits_ruido_fieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bits_ruido_fieldKeyTyped
         JTextField text = (JTextField) evt.getSource();
         text.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent e) {
                 char caracter = e.getKeyChar();
                 // Verificar si la tecla pulsada no es un digito

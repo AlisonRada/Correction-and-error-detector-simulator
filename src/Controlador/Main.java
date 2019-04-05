@@ -330,28 +330,40 @@ public class Main {
         }
     }
 
-    public static File errorRandom(File sourceFile, Component w, JTextField nrand, JTextField namebtp) {
+    public static void errorRandom(Component w, JTextField nrand, JTextField namebtp, boolean btp) {
         File dir = new File("resources/");
-        File[] matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".btp"));
+        File[] matches;
+        if (btp) {
+            matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".btp"));
+        }else{
+            matches = dir.listFiles((File dir1, String name) -> name.equals(namebtp.getText() + ".ham"));
+        }
+        
         if (matches.length != 0) {
-            File codewords = matches[0];
+            File mfile = matches[0];
             try {
-                FileReader fr = new FileReader(codewords);
+                FileReader fr = new FileReader(mfile);
                 BufferedReader reader = new BufferedReader(fr);
                 int n = parseInt(nrand.getText());
                 int randomNum;
-                ArrayList<String> modfile = new ArrayList<>(); 
-                while (reader.readLine()!=null) {
-                    modfile.add(reader.readLine()); //Mueve el archivo a un array de Strings (modfile).
+                String l = reader.readLine();
+                ArrayList<String> modfile = new ArrayList<>();
+                while(l!=null)  {
+                    modfile.add(l); //Mueve el archivo a un array de Strings (modfile).
+                    l=reader.readLine();
+                }
+                for (int i = 0; i < 10; i++) {
+                    
                 }
                 reader.close();
                 //Aqui empieza la modificacion random
                 String linea;
                 int[][] changed = new int[modfile.size()][modfile.get(0).length()];
                 int j = 0;
-                boolean ended = true;
+                boolean ended = false;
                 while (j<modfile.size() && !ended) { //Dos while anidados para iterar entre los caracteres del archivo
                     linea = modfile.get(j);
+                    System.out.println(j);
                     int i = 0;
                     while (i < linea.length() && n>0) {
                         randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1); //0 es el minimo y 10 el maximo
@@ -371,22 +383,38 @@ public class Main {
                     como terminado si n es 0, y aumenta j cuando aun no se modifican los n bits.
                     */
                     if (n > 0 && j+1<modfile.size()) { 
-                        modfile.add(j, linea);         
+                        modfile.set(j, linea);
                         j++;
                     } else if (n > 0) {
+                        modfile.set(j, linea);
                         j=0;
                     } else {
+                        modfile.set(j, linea);
                         ended=true;
                     }
                 }
+                
+                try {
+                    FileWriter fw = new FileWriter(mfile);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    for (String line : modfile) {
+                        bw.write(line);
+                        bw.newLine();
+                    }
+                    bw.close();
+                    fw.close();
+                    JOptionPane.showMessageDialog(w, "Archivo .btp modificado", "Generado", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(w, "Ha fallado la creacion del archivo, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(w, "Error inesperado, intente nuevamente", "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
 
         } else {
             JOptionPane.showMessageDialog(w, "No se ha encontrado el archivo.\nPor favor verifique el nombre en la carpeta resources", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        return null;
     }
 
     public void CreateFile(String nombre, String Path) {
